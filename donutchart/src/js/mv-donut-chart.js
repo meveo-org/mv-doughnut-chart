@@ -394,7 +394,7 @@ position:relative;top:30px;
               <div class="inner">
                 <img src="./src/img/donut-img.svg" /><br /><span
                   class="title"
-                  >Brands</span
+                  >${DOUGHNUT_CONFIG.type}</span
                 ><br /><span class="result"
                   >${DOUGHNUT_CONFIG.result}</span
                 >
