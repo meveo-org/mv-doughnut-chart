@@ -392,7 +392,7 @@ position:relative;top:30px;
             </div>
             <div class="center">
               <div class="inner">
-                <img src="./src/img/donut-img.svg" /><br /><span
+                <img src="${DOUGHNUT_CONFIG.imgUrl}" /><br /><span
                   class="title"
                   >${DOUGHNUT_CONFIG.type}</span
                 ><br /><span class="result"

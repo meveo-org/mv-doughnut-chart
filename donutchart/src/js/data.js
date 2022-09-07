@@ -1,6 +1,7 @@
 export const DOUGHNUT_CONFIG = {
-  type: "doughnut",
+  type: "king",
   result: Math.floor(Math.random() * 100),
+  imgUrl: "./src/img/donut-img.svg",
   data: {
 
     names: [
