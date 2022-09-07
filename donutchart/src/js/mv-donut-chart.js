@@ -395,13 +395,17 @@ position:relative;top:30px;
         this.theme = "light";
         this.chart = null;
         this.valeur = null;
+        this.label = null;
     }
 
     static get properties() {
         return {
             valeur: {
                 type: Array
-            }
+            },
+            label: {
+              type: Array
+          }
         };
     }
 
@@ -466,6 +470,7 @@ ${this.displayDonutBubbles()}
         let i;
         let loop = new Array();
         this.valeur = new Array();
+        this.label = new Array();
 
         let max = DOUGHNUT_CONFIG
             .data
@@ -482,6 +487,10 @@ ${this.displayDonutBubbles()}
                     .datasets[0]
                     .data[i];
 
+                    this.label[i] = DOUGHNUT_CONFIG.data.names[i];
+                    this.label[i] = this.label[i].substr(0,25);
+
+
                 if (DOUGHNUT_CONFIG.data.datasets[0].links[i] != '') {
 
                     loop[i] = html `<a href="${DOUGHNUT_CONFIG
@@ -490,18 +499,14 @@ ${this.displayDonutBubbles()}
                         .links[i]}" target="_blank"  class="result-${i + 1}-${max} resultats pos"  style="border:solid 10px ${DOUGHNUT_CONFIG
                         .data
                         .datasets[0]
-                        .backgroundColor[i]};"><span><span>${DOUGHNUT_CONFIG
-                        .data
-                        .names[i]}</span><br /><strong id="value-${i}">${this
+                        .backgroundColor[i]};"><span><span>${this.label[i]}</span><br /><strong id="value-${i}">${this
                         .valeur[i]}</strong></span></a>`;
                 } else {
 
                     loop[i] = html `<a class="result-${i + 1}-${max} resultats pos nolink"  style="border:solid 10px ${DOUGHNUT_CONFIG
                         .data
                         .datasets[0]
-                        .backgroundColor[i]};"><span><span>${DOUGHNUT_CONFIG
-                        .data
-                        .names[i]}</span><br /><strong id="value-${i}">${this
+                        .backgroundColor[i]};"><span><span>${this.label[i]}</span><br /><strong id="value-${i}">${this
                         .valeur[i]}</strong></span></a>`;
 
                 }
