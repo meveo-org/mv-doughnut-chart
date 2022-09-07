@@ -332,6 +332,30 @@ export class MvChart extends LitElement {
 .result-5-6{top: 135px !important;left: -275px  !important; animation: fadein 4s;}
 .result-6-6{left:-160px !important;top:-145px;animation: fadein 5s;}
 
+
+.result-1-7{right:-160px !important;top:-145px;animation: fadein 0s;}
+.result-2-7{top: 135px !important;right: -275px  !important;animation: fadein 1s; }
+.result-3-7{right:-160px !important;top: 440px !important;animation: fadein 2s;}
+.result-4-7{left:-160px !important;top: 440px !important;animation: fadein 3s;}
+.result-5-7{top: 135px !important;left: -275px  !important; animation: fadein 4s;}
+.result-6-7{left:-160px !important;top:-145px;animation: fadein 5s;}
+.result-7-7{top: -270px;animation: 6s ease 0s 1 normal none running fadein;left: 146px !important;}
+
+.result-1-8{right:-160px !important;top:-145px;animation: fadein 0s;}
+.result-2-8{top: 135px !important;right: -275px  !important;animation: fadein 1s; }
+.result-3-8{right:-160px !important;top: 440px !important;animation: fadein 2s;}
+
+
+.result-4-8{top: 565px;animation: 6s ease 0s 1 normal none running fadein;left: 146px !important;}
+.result-5-8{left:-160px !important;top: 440px !important;animation: fadein 3s;}
+.result-6-8{top: 135px !important;left: -275px  !important; animation: fadein 4s;}
+.result-7-8{left:-160px !important;top:-145px;animation: fadein 5s;}
+.result-8-8{top: -270px;animation: 6s ease 0s 1 normal none running fadein;left: 146px !important;}
+
+
+
+
+
 a.nolink:hover{cursor:context-menu !important;background-color:#fff;border-color:#DCE9F2 !important;}
 
 
@@ -394,7 +418,7 @@ position:relative;top:30px;
               <div class="inner">
                 <img src="${DOUGHNUT_CONFIG.imgUrl}" /><br /><span
                   class="title"
-                  >${DOUGHNUT_CONFIG.type}</span
+                  >${DOUGHNUT_CONFIG.label}</span
                 ><br /><span class="result"
                   >${DOUGHNUT_CONFIG.result}</span
                 >

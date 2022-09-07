@@ -1,20 +1,25 @@
 export const DOUGHNUT_CONFIG = {
-  type: "king",
-  result: Math.floor(Math.random() * 100),
+  type: "doughnut",
+  result: Math.floor(Math.random() * 100) + "%",
   imgUrl: "./src/img/donut-img.svg",
+  label: "Profil",
   data: {
 
     names: [
-      'Apple',
-      'Windows',
-      'Nokia',
-      'Huawai',
-      'Android',
-      'linux'
+      'Pinterest',
+      'Facebook',
+      'Youtube',
+      'Instagram',
+      'Whatsapp',
+      'snapchat',
+      'telegram',
+      'tiktok'
     ],
     datasets: [{
       label: 'Donut',
       data: [Math.floor(Math.random() * 100),
+      Math.floor(Math.random() * 100),
+      Math.floor(Math.random() * 100),
       Math.floor(Math.random() * 100),
       Math.floor(Math.random() * 100),
       Math.floor(Math.random() * 100),
@@ -27,7 +32,9 @@ export const DOUGHNUT_CONFIG = {
         '#cc18e0',
         '#F14665',
         '#F1960C',
-        '#4c9f62'
+        '#4c9f62',
+        '#ccc',
+        '#333'
 
       ],
       links: [
@@ -36,6 +43,8 @@ export const DOUGHNUT_CONFIG = {
         'http://nokia.com',
         'http://huawai.com',
         'http://google.com',
+        'http://linux.org',
+        'http://linux.org',
         'http://linux.org'
 
       ],
