@@ -1,6 +1,7 @@
-import { LitElement, html, css } from "lit-element";
-import "mv-container";
+import { LitElement, html, css } from "https://cdn.jsdelivr.net/gh/meveo-org/mv-dependencies@master/lit-element.js";
+//import "mv-container";
 import "./donutchart/src/js/mv-donut-chart.js";
+import { DOUGHNUT_CONFIG } from "./donutchart/src/js/data.js";
 
 export class MvChartBubbleDemo extends LitElement {
   static get properties() {
@@ -89,7 +90,7 @@ export class MvChartBubbleDemo extends LitElement {
       </fieldset>
       
       <mv-container class="main-container" .theme="${this.theme}">
-        <mv-chart-donut></mv-chart-donut>
+        <mv-chart-donut .data="${DOUGHNUT_CONFIG}"></mv-chart-donut>
       </mv-container>
     `;
   }

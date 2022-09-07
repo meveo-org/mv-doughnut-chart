@@ -1,7 +1,7 @@
 export const DOUGHNUT_CONFIG = {
   type: "doughnut",
   result: Math.floor(Math.random() * 100) + "%",
-  imgUrl: "./src/img/donut-img.svg",
+  imgUrl: "./donutchart/src/img/donut-img.svg",
   label: "Profil",
   data: {
 

@@ -1,7 +1,7 @@
 import {LitElement, html, css} from "https://cdn.jsdelivr.net/gh/meveo-org/mv-dependencies@master/lit-element.js";
 import "../lib/chart.min.js";
 import "../lib/chartjs-plugin-datalabels.min.js";
-import {DOUGHNUT_CONFIG} from "./data.js";
+
 
 export class MvChart extends LitElement {
     static get properties() {
@@ -420,11 +420,11 @@ position:relative;top:30px;
             </div>
             <div class="center">
               <div class="inner">
-                <img src="${DOUGHNUT_CONFIG.imgUrl}" /><br /><span
+                <img src="${this.data.imgUrl}" /><br /><span
                   class="title"
-                  >${DOUGHNUT_CONFIG.label}</span
+                  >${this.data.label}</span
                 ><br /><span class="result"
-                  >${DOUGHNUT_CONFIG.result}</span
+                  >${this.data.result}</span
                 >
               </div>
         
@@ -459,7 +459,7 @@ ${this.displayDonutBubbles()}
                 .shadowRoot
                 .querySelector(".mv-chart-canvas")
                 .getContext("2d");
-            this.chart = new Chart(canvas, DOUGHNUT_CONFIG);
+            this.chart = new Chart(canvas, this.data);
         }
 
     }
@@ -472,7 +472,7 @@ ${this.displayDonutBubbles()}
         this.valeur = new Array();
         this.label = new Array();
 
-        let max = DOUGHNUT_CONFIG
+        let max = this.data
             .data
             .datasets[0]
             .data
@@ -480,30 +480,30 @@ ${this.displayDonutBubbles()}
 
         for (i = 0; i < max; i++) {
 
-            if (DOUGHNUT_CONFIG.data.datasets[0].data[i]) {
+            if (this.data.data.datasets[0].data[i]) {
 
-                this.valeur[i] = DOUGHNUT_CONFIG
+                this.valeur[i] = this.data
                     .data
                     .datasets[0]
                     .data[i];
 
-                    this.label[i] = DOUGHNUT_CONFIG.data.names[i];
+                    this.label[i] = this.data.data.names[i];
                     this.label[i] = this.label[i].substr(0,25);
 
 
-                if (DOUGHNUT_CONFIG.data.datasets[0].links[i] != '') {
+                if (this.data.data.datasets[0].links[i] != '') {
 
-                    loop[i] = html `<a href="${DOUGHNUT_CONFIG
+                    loop[i] = html `<a href="${this.data
                         .data
                         .datasets[0]
-                        .links[i]}" target="_blank"  class="result-${i + 1}-${max} resultats pos"  style="border:solid 10px ${DOUGHNUT_CONFIG
+                        .links[i]}" target="_blank"  class="result-${i + 1}-${max} resultats pos"  style="border:solid 10px ${this.data
                         .data
                         .datasets[0]
                         .backgroundColor[i]};"><span><span>${this.label[i]}</span><br /><strong id="value-${i}">${this
                         .valeur[i]}</strong></span></a>`;
                 } else {
 
-                    loop[i] = html `<a class="result-${i + 1}-${max} resultats pos nolink"  style="border:solid 10px ${DOUGHNUT_CONFIG
+                    loop[i] = html `<a class="result-${i + 1}-${max} resultats pos nolink"  style="border:solid 10px ${this.data
                         .data
                         .datasets[0]
                         .backgroundColor[i]};"><span><span>${this.label[i]}</span><br /><strong id="value-${i}">${this
