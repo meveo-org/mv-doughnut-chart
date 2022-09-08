@@ -11,9 +11,8 @@ export const DOUGHNUT_CONFIG = {
       'Youtube',
       'Instagram',
       'Whatsapp',
-      'snapchat',
-      'telegram',
-      'tiktok'
+      'snapchat'
+ 
     ],
     datasets: [{
       label: 'Donut',
@@ -23,8 +22,8 @@ export const DOUGHNUT_CONFIG = {
       Math.floor(Math.random() * 100),
       Math.floor(Math.random() * 100),
       Math.floor(Math.random() * 100),
-      Math.floor(Math.random() * 100),
-      Math.floor(Math.random() * 100)],
+
+    ],
       backgroundColor: [
 
         '#0D94AD',

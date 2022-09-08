@@ -270,88 +270,54 @@ export class MvChart extends LitElement {
 
 
 
-      .resultats {
-        border-radius: 50%;
-        position: absolute;
-        right: 0px;
-        font-size: 60px;
-        width: 150px;
-        height: 150px;
-        text-align: center;
-        top: 155px;
-        background-color: #fff;
-        color: #000;
-        text-decoration: none;
-        
-      }
 
 
 
-      .resultats > span > span {
-        font-size: 20px;
-      }
 
 
-      .result {
-        font-size: 100px;
-        width: 150px;
-        height: 150px;
-        text-align: center;
-      }
-
-
-      
-/*disposition des bulles*/
-.result-1-1{right:-160px !important;top:-145px;animation: fadein 1s; }
-
-.result-1-2{top: 135px !important;right: -275px !important ;animation: fadein 1s; }
-.result-2-2{top: 135px !important;left: -275px  !important; animation: fadein 4s;}
-
-.result-1-3{top: 165px !important; right: 0px  !important;animation: fadein 1s; }
-.result-2-3{left:145px !important;top: 500px !important;animation: fadein 3s;}
-.result-3-3{left:145px !important;top:-145px;animation: fadein 5s;}
+.labelindic {
+  position: absolute;
+  left: 50%;
+  z-index: 9999;
+  width: 100px;
+  margin-left: -50px;
+  text-align: center;
+  top: 170px;
+}
 
 
 
-.result-1-4{right:-160px !important;top:-145px;animation: fadein 0s;}
-.result-2-4{right:-160px !important;top: 440px !important;animation: fadein 2s;}
-.result-3-4{left:-160px !important;top: 440px !important;animation: fadein 3s;}
-.result-4-4{left:-160px !important;top:-145px;animation: fadein 5s;}
+    .labelindic span{text-transform:uppercase;font-size: 11px;position:relative;display:block;line-height:9px;line-height:12px;}
 
-.result-1-5{right:-160px !important;top:-145px;animation: fadein 0s;}
-.result-2-5{top: 135px !important;right: -275px !important;animation: fadein 1s; }
-.result-3-5{right:-160px !important;top: 440px !important;animation: fadein 2s;}
-.result-4-5{left:-160px !important;top: 440px !important;animation: fadein 3s;}
-.result-5-5{top: 135px !important;left: -275px !important; animation: fadein 4s;}
+    .labelindic a span  span {font-size:14px;}
 
 
-.result-1-6{right:-160px !important;top:-145px;animation: fadein 0s;}
-.result-2-6{top: 135px !important;right: -275px  !important;animation: fadein 1s; }
-.result-3-6{right:-160px !important;top: 440px !important;animation: fadein 2s;}
-.result-4-6{left:-160px !important;top: 440px !important;animation: fadein 3s;}
-.result-5-6{top: 135px !important;left: -275px  !important; animation: fadein 4s;}
-.result-6-6{left:-160px !important;top:-145px;animation: fadein 5s;}
+
+  .labelindic a {
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    display: block;
+    transform-origin: 420px center;
+    transform: rotate(90deg);
+    position: relative;
+    
+
+    right: 200px;
 
 
-.result-1-7{right:-160px !important;top:-145px;animation: fadein 0s;}
-.result-2-7{top: 135px !important;right: -275px  !important;animation: fadein 1s; }
-.result-3-7{right:-160px !important;top: 440px !important;animation: fadein 2s;}
-.result-4-7{left:-160px !important;top: 440px !important;animation: fadein 3s;}
-.result-5-7{top: 135px !important;left: -275px  !important; animation: fadein 4s;}
-.result-6-7{left:-160px !important;top:-145px;animation: fadein 5s;}
-.result-7-7{top: -270px;animation: 6s ease 0s 1 normal none running fadein;left: 146px !important;}
+}
 
-.result-1-8{right:-160px !important;top:-145px;animation: fadein 0s;}
-.result-2-8{top: 135px !important;right: -275px  !important;animation: fadein 1s; }
-.result-3-8{right:-160px !important;top: 440px !important;animation: fadein 2s;}
+.labelindic a span{    border-radius: 50%;  background-color:#fff;  font-size: 36px;    width: 100px;
+  height: 100px;padding :10px;}
 
 
-.result-4-8{top: 565px;animation: 6s ease 0s 1 normal none running fadein;left: 146px !important;}
-.result-5-8{left:-160px !important;top: 440px !important;animation: fadein 3s;}
-.result-6-8{top: 135px !important;left: -275px  !important; animation: fadein 4s;}
-.result-7-8{left:-160px !important;top:-145px;animation: fadein 5s;}
-.result-8-8{top: -270px;animation: 6s ease 0s 1 normal none running fadein;left: 146px !important;}
 
+
+.labelindic .label{font-weight:normal;font-size:14px;margin-bottom:10px;padding-top : 20px  ;display:block;}
+.labelindic .hits{}
+
+
+.nolink a:hover{text-decoration:none;cursor:default;}
 
 
 
@@ -387,6 +353,7 @@ position:relative;top:30px;
 
 
 
+
     `;
     }
 
@@ -414,7 +381,7 @@ position:relative;top:30px;
 
 
 
-<div style="transform: scale(0.4);">
+<div style="transform: scale(0.5);">
 <div class="back-stroke">
               <div class="back"></div>
             </div>
@@ -452,14 +419,14 @@ ${this.displayDonutBubbles()}
 
      
         if (!this.chart) {
-       
+          const { data } = this;
             const plugins = this.plugins || [];
             plugins.push(ChartDataLabels);
             const canvas = this
                 .shadowRoot
                 .querySelector(".mv-chart-canvas")
                 .getContext("2d");
-            this.chart = new Chart(canvas, this.data);
+            this.chart = new Chart(canvas, data);
         }
 
     }
@@ -472,11 +439,14 @@ ${this.displayDonutBubbles()}
         this.valeur = new Array();
         this.label = new Array();
 
-        let max = this.data
-            .data
-            .datasets[0]
-            .data
-            .length;
+        let max = this.data.data.datasets[0].data.length;
+
+
+        let positionDeg =new Array();
+        let ratio = 360/max;
+        let pos = new Array();
+
+
 
         for (i = 0; i < max; i++) {
 
@@ -490,27 +460,58 @@ ${this.displayDonutBubbles()}
                     this.label[i] = this.data.data.names[i];
                     this.label[i] = this.label[i].substr(0,25);
 
+ positionDeg[i] = ratio*i; 
+
+
+      if(i%2 == 0)
+{
+  pos[i] =  positionDeg[i]-90+90*positionDeg[i]+360/i;
+}
+else
+{
+  pos[i] =  positionDeg[i]-90*i+90*positionDeg[i]+180*i;
+}
+
 
                 if (this.data.data.datasets[0].links[i] != '') {
 
-                    loop[i] = html `<a href="${this.data
-                        .data
-                        .datasets[0]
-                        .links[i]}" target="_blank"  class="result-${i + 1}-${max} resultats pos"  style="border:solid 10px ${this.data
-                        .data
-                        .datasets[0]
-                        .backgroundColor[i]};"><span><span>${this.label[i]}</span><br /><strong id="value-${i}">${this
-                        .valeur[i]}</strong></span></a>`;
-                } else {
 
-                    loop[i] = html `<a class="result-${i + 1}-${max} resultats pos nolink"  style="border:solid 10px ${this.data
-                        .data
-                        .datasets[0]
-                        .backgroundColor[i]};"><span><span>${this.label[i]}</span><br /><strong id="value-${i}">${this
-                        .valeur[i]}</strong></span></a>`;
+
+
+
+
+
+
+
+                loop[i] = html`
+                <div class="label${i + 1} labelindic pos-${i + 1}-${max}" style="transform: rotate(${positionDeg[i]}deg);">
+         
+                  <a href="${this.data.data.datasets[0].links[i]}"  target="_blank">
+                    <span  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this.data.data.datasets[0].backgroundColor[i]};"   ><b class="label">${this.label[i]}</b><br/><b class="hits">${this
+                        .valeur[i]}</b></span></a>
+               
+                </div>`;
+
+
+
+
+                } else {
+                            
+                  loop[i] = html`
+                <div class="label${i + 1} labelindic pos-${i + 1}-${max} nolink"  style="transform: rotate(${positionDeg[i]}deg);">
+                <a>
+                  <span  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this.data.data.datasets[0].backgroundColor[i]};"><b class="label">${this.label[i]}</b><br/><b class="hits">${this.valeur[i]}</b></span></a>
+                </div>`;
+
+
+
 
                 }
-            }
+              }
+
+
+
+                 
 
         }
         return loop;
