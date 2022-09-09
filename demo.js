@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "https://cdn.jsdelivr.net/gh/meveo-org/mv-dependencies@master/lit-element.js";
+import { LitElement, html, css } from "lit";
 //import "mv-container";
 import "./donutchart/src/js/mv-donut-chart.js";
 import { DOUGHNUT_CONFIG } from "./donutchart/src/js/data.js";

@@ -1,4 +1,4 @@
-import {LitElement, html, css} from "https://cdn.jsdelivr.net/gh/meveo-org/mv-dependencies@master/lit-element.js";
+import {LitElement, html, css} from "lit.js";
 import "../lib/chart.min.js";
 import "../lib/chartjs-plugin-datalabels.min.js";
 
