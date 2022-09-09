@@ -65,6 +65,7 @@ export class MvChartBubbleDemo extends LitElement {
         grid-template-rows: 290px 290px;
         grid-gap: 0;
       }
+      
     `;
   }
 

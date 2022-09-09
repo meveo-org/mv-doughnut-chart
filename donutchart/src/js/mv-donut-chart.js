@@ -1,4 +1,4 @@
-import {LitElement, html, css} from "lit.js";
+import {LitElement, html, css} from "lit";
 import "../lib/chart.min.js";
 import "../lib/chartjs-plugin-datalabels.min.js";
 
@@ -148,7 +148,10 @@ export class MvChart extends LitElement {
         width: 200px;
       }
 
-    /*donut chart*/
+
+      /*donut chart*/
+  
+
 
 
 
@@ -188,16 +191,19 @@ export class MvChart extends LitElement {
 
 
       .center {
-        width: 450px;
-        height: 450px;
-        background-color: #dce9f2;
+        width: 485px;
+        height: 485px;
+        background-color: rgb(220, 233, 242);
         border-radius: 50%;
         position: absolute;
         left: 50%;
-        margin-left: -225px;
-        top: 25px;
+        margin-left: -240px;
+        top: 45px;
         z-index: 999;
-      }
+    }
+
+
+
       .inner {
         width: 400px;
         height: 400px;
@@ -206,7 +212,7 @@ export class MvChart extends LitElement {
         position: absolute;
         left: 50%;
         margin-left: -199px;
-        top: 25px;
+        top: 40px;
         z-index: 9991;
         color: #fff;
         text-align: center;
@@ -216,30 +222,42 @@ export class MvChart extends LitElement {
       }
 
       .back {
-        width: 600px;
-        height: 600px;
-        background-color: #dce9f2;
+        width: 580px;
+        height: 580px;
+        background-color: rgb(220, 233, 242);
         border-radius: 50%;
         position: absolute;
         left: 50%;
-        margin-left: -300px;
-        top: 45px;
+        margin-left: -290px;
+        top: 65px;
         z-index: 0;
-        box-shadow: 0px 10px 10px #ccc;
-      }
+    
+    }
 
-      .back-stroke {
-        width: 700px;
-        height: 700px;
-        border-radius: 50%;
-        position: absolute;
-        left: 50%;
-        margin-left: -350px;
-        top: -100px;
-        z-index: 0;
-       /* box-shadow: rgb(204 204 204) 0px 10px 10px; */
-        border: 5px solid rgb(204, 204, 204);
-      }
+    .back-stroke {
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      position: absolute;
+      left: 50%;
+      margin-left: -350px;
+      top: 25px;
+      z-index: 0;
+      box-shadow: 0px 0px 20px #ccc;
+      background-color: #fff;
+  }
+
+  .big-circle{border:solid 5px #DFDFDF;
+    width: 750px;
+    height: 750px;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    margin-left: -350px;
+    top: -100px;
+    background-color:#ECF5F9;
+
+  }
 
       .inner span:first-child {
         font-size: 30px;
@@ -275,15 +293,15 @@ export class MvChart extends LitElement {
 
 
 
-.labelindic {
-  position: absolute;
-  left: 50%;
-  z-index: 9999;
-  width: 100px;
-  margin-left: -50px;
-  text-align: center;
-  top: 170px;
-}
+      .labelindic {
+        position: absolute;
+        left: 50%;
+        z-index: 9999;
+        width: 435px;
+        margin-left: -215px;
+        text-align: center;
+        top: 310px;
+    }
 
 
 
@@ -300,21 +318,27 @@ export class MvChart extends LitElement {
     transform-origin: 420px center;
     transform: rotate(90deg);
     position: relative;
-    
-
     right: 200px;
-
 
 }
 
 .labelindic a span{    border-radius: 50%;  background-color:#fff;  font-size: 36px;    width: 100px;
-  height: 100px;padding :10px;}
+  height: 100px;padding :10px;  box-shadow:0px 0px 20px #ccc;}
+
+
+.labelindic a span img
+
+{  display: none;
+  position: absolute;
+  right: -20px;
+  bottom: 100px;
+  transform: scale(1.5);
+}
 
 
 
 
 .labelindic .label{font-weight:normal;font-size:14px;margin-bottom:10px;padding-top : 20px  ;display:block;}
-.labelindic .hits{}
 
 
 .nolink a:hover{text-decoration:none;cursor:default;}
@@ -323,6 +347,11 @@ export class MvChart extends LitElement {
 
 
 a.nolink:hover{cursor:context-menu !important;background-color:#fff;border-color:#DCE9F2 !important;}
+
+
+.labelindic a:hover img{display:block !important;}
+
+
 
 
 
@@ -347,7 +376,7 @@ position:relative;top:30px;
   display: block !important;
   margin: auto;
   left: -158px;
-  top: -14px;
+  top: 20px;
   position: relative;
 }
 
@@ -381,10 +410,19 @@ position:relative;top:30px;
 
 
 
-<div style="transform: scale(0.5);">
+<div style="transform: scale(0.5);margin-top:  100px;">
+<div class="big-circle">
 <div class="back-stroke">
-              <div class="back"></div>
-            </div>
+
+              <div class="back">
+
+
+
+              <div class="mv-chart">
+        <canvas class="mv-chart-canvas"></canvas>
+      </div>
+
+
             <div class="center">
               <div class="inner">
                 <img src="${this.data.imgUrl}" /><br /><span
@@ -394,6 +432,9 @@ position:relative;top:30px;
                   >${this.data.result}</span
                 >
               </div>
+              </div>
+
+</div></div>
         
 
 ${this.displayDonutBubbles()}
@@ -401,9 +442,7 @@ ${this.displayDonutBubbles()}
 </div>
 
 
-      <div class="mv-chart">
-        <canvas class="mv-chart-canvas"></canvas>
-      </div>
+
       </div>
 
 
@@ -497,7 +536,9 @@ ${this.displayDonutBubbles()}
                 <div class="label${i + 1} labelindic pos-${i + 1}-${max}" style="transform: rotate(${positionDeg[i]}deg);">
          
                   <a href="${this.data.data.datasets[0].links[i]}"  target="_blank">
-                    <span  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this.data.data.datasets[0].backgroundColor[i]};"   ><b class="label">${this.label[i]}</b><br/><b class="hits">${this
+                    <span  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this.data.data.datasets[0].backgroundColor[i]};"   >
+                    <img src="./donutchart/src/img/fiche-donut.svg" style="display:none;"/>
+                    <b class="label">${this.label[i]}</b><br/><b class="hits">${this
                         .valeur[i]}</b></span></a>
                
                 </div>`;
