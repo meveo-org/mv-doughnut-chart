@@ -10,8 +10,9 @@ export const DOUGHNUT_CONFIG = {
       'Facebook',
       'Youtube',
       'Instagram',
-      'Whatsapp',
-      'snapchat'
+      'Youtube',
+      'Instagram'
+
  
     ],
     datasets: [{
@@ -21,7 +22,7 @@ export const DOUGHNUT_CONFIG = {
       Math.floor(Math.random() * 100),
       Math.floor(Math.random() * 100),
       Math.floor(Math.random() * 100),
-      Math.floor(Math.random() * 100),
+      Math.floor(Math.random() * 100)
 
     ],
       backgroundColor: [

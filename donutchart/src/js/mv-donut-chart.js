@@ -460,17 +460,27 @@ ${this.displayDonutBubbles()}
                     this.label[i] = this.data.data.names[i];
                     this.label[i] = this.label[i].substr(0,25);
 
- positionDeg[i] = ratio*i; 
+                    positionDeg[i] = ratio*i; 
 
 
-      if(i%2 == 0)
-{
-  pos[i] =  positionDeg[i]-90+90*positionDeg[i]+360/i;
-}
-else
-{
-  pos[i] =  positionDeg[i]-90*i+90*positionDeg[i]+180*i;
-}
+                    pos[i] = -90 * (i+1) - positionDeg[i] -90*(i+1) -90;
+              
+                 if(i%2 == 0)
+                         {
+                         pos[i] =  pos[i]+180;
+                
+                          }
+                             else
+                              {
+                   
+                               
+                   
+                        
+                               }
+
+
+
+
 
 
                 if (this.data.data.datasets[0].links[i] != '') {
