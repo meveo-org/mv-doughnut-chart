@@ -1,41 +1,45 @@
-import {LitElement, html, css} from "lit";
-import "../lib/chart.min.js";
-import "../lib/chartjs-plugin-datalabels.min.js";
+import { LitElement, html, css } from "lit";
+import { Chart, DoughnutController, ArcElement } from "chart.js";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
+Chart.register(
+  DoughnutController,
+  ArcElement
+);
 
 export class MvChart extends LitElement {
-    static get properties() {
-        return {
-            type: {
-                type: String,
-                attribute: true
-            },
-            data: {
-                type: Object,
-                attribute: false,
-                reflect: true
-            },
-            options: {
-                type: Object,
-                attribute: false,
-                reflect: true
-            },
-            plugins: {
-                type: Object,
-                attribute: false,
-                reflect: true
-            },
+  static get properties() {
+    return {
+      type: {
+        type: String,
+        attribute: true
+      },
+      data: {
+        type: Object,
+        attribute: false,
+        reflect: true
+      },
+      options: {
+        type: Object,
+        attribute: false,
+        reflect: true
+      },
+      plugins: {
+        type: Object,
+        attribute: false,
+        reflect: true
+      },
 
-            //  valid theme values are: "light", "dark"    default: "light"
-            theme: {
-                type: String,
-                attribute: true
-            }
-        };
-    }
+      //  valid theme values are: "light", "dark"    default: "light"
+      theme: {
+        type: String,
+        attribute: true
+      }
+    };
+  }
 
-    static get styles() {
-        return css `
+  static get styles() {
+    return css`
       :host {
         font-family: var(--font-family, Arial);
         font-size: var(--font-size-m, 10pt);
@@ -384,189 +388,185 @@ position:relative;top:30px;
 
 
     `;
-    }
+  }
 
-    constructor() {
-        super();
-        this.theme = "light";
-        this.chart = null;
-        this.valeur = null;
-        this.label = null;
-    }
+  constructor() {
+    super();
+    this.theme = "light";
+    this.chart = null;
+    this.valeur = null;
+    this.label = null;
+  }
 
-    static get properties() {
-        return {
-            valeur: {
-                type: Array
-            },
-            label: {
-              type: Array
-          }
-        };
-    }
+  static get properties() {
+    return {
+      valeur: {
+        type: Array
+      },
+      label: {
+        type: Array
+      }
+    };
+  }
 
-    render() {
-        return html `
+  render() {
+    return html`
 
 
 
 <div style="transform: scale(0.5);margin-top:  100px;">
-<div class="big-circle">
-<div class="back-stroke">
+  <div class="big-circle">
+    <div class="back-stroke">
 
-              <div class="back">
+      <div class="back">
 
 
 
-              <div class="mv-chart">
-        <canvas class="mv-chart-canvas"></canvas>
+        <div class="mv-chart">
+          <canvas class="mv-chart-canvas"></canvas>
+        </div>
+
+
+        <div class="center">
+          <div class="inner">
+            <img src="${this.data.imgUrl}" /><br /><span class="title">${this.data.label}</span><br /><span
+              class="result">${this.data.result}</span>
+          </div>
+        </div>
+
       </div>
+    </div>
 
 
-            <div class="center">
-              <div class="inner">
-                <img src="${this.data.imgUrl}" /><br /><span
-                  class="title"
-                  >${this.data.label}</span
-                ><br /><span class="result"
-                  >${this.data.result}</span
-                >
-              </div>
-              </div>
+    ${this.displayDonutBubbles()}
 
-</div></div>
-        
+  </div>
 
-${this.displayDonutBubbles()}
+
 
 </div>
 
 
 
-      </div>
-
-
-
 
     `;
+  }
+
+  firstUpdated() {
+
+
+
+
+
+    if (!this.chart) {
+      const { data } = this;
+      const plugins = this.plugins || [];
+      plugins.push(ChartDataLabels);
+      const canvas = this
+        .shadowRoot
+        .querySelector(".mv-chart-canvas")
+        .getContext("2d");
+      this.chart = new Chart(canvas, data);
     }
 
-    firstUpdated() {
+  }
 
 
-     
 
-     
-        if (!this.chart) {
-          const { data } = this;
-            const plugins = this.plugins || [];
-            plugins.push(ChartDataLabels);
-            const canvas = this
-                .shadowRoot
-                .querySelector(".mv-chart-canvas")
-                .getContext("2d");
-            this.chart = new Chart(canvas, data);
+  displayDonutBubbles() {
+    let i;
+    let loop = new Array();
+    this.valeur = new Array();
+    this.label = new Array();
+
+    let max = this.data.data.datasets[0].data.length;
+
+
+    let positionDeg = new Array();
+    let ratio = 360 / max;
+    let pos = new Array();
+
+
+
+    for (i = 0; i < max; i++) {
+
+      if (this.data.data.datasets[0].data[i]) {
+
+        this.valeur[i] = this.data
+          .data
+          .datasets[0]
+          .data[i];
+
+        this.label[i] = this.data.data.names[i];
+        this.label[i] = this.label[i].substr(0, 25);
+
+        positionDeg[i] = ratio * i;
+
+
+        pos[i] = -90 * (i + 1) - positionDeg[i] - 90 * (i + 1) - 90;
+
+        if (i % 2 == 0) {
+          pos[i] = pos[i] + 180;
+
+        }
+        else {
+
+
+
+
         }
 
-    }
-
- 
-
-    displayDonutBubbles() {
-        let i;
-        let loop = new Array();
-        this.valeur = new Array();
-        this.label = new Array();
-
-        let max = this.data.data.datasets[0].data.length;
-
-
-        let positionDeg =new Array();
-        let ratio = 360/max;
-        let pos = new Array();
 
 
 
-        for (i = 0; i < max; i++) {
-
-            if (this.data.data.datasets[0].data[i]) {
-
-                this.valeur[i] = this.data
-                    .data
-                    .datasets[0]
-                    .data[i];
-
-                    this.label[i] = this.data.data.names[i];
-                    this.label[i] = this.label[i].substr(0,25);
-
-                    positionDeg[i] = ratio*i; 
 
 
-                    pos[i] = -90 * (i+1) - positionDeg[i] -90*(i+1) -90;
-              
-                 if(i%2 == 0)
-                         {
-                         pos[i] =  pos[i]+180;
+        if (this.data.data.datasets[0].links[i] != '') {
+
+
+
+
+
+
+
+
+
+          loop[i] = html`
+                <div class="label${i + 1} labelindic pos-${i + 1}-${max}" style="transform: rotate(xxxxxxxxxxxxxxxxxdeg);">
                 
-                          }
-                             else
-                              {
-                   
-                               
-                   
-                        
-                               }
-
-
-
-
-
-
-                if (this.data.data.datasets[0].links[i] != '') {
-
-
-
-
-
-
-
-
-
-                loop[i] = html`
-                <div class="label${i + 1} labelindic pos-${i + 1}-${max}" style="transform: rotate(${positionDeg[i]}deg);">
-         
-                  <a href="${this.data.data.datasets[0].links[i]}"  target="_blank">
-                    <span  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this.data.data.datasets[0].backgroundColor[i]};"   >
-                    <img src="./donutchart/src/img/fiche-donut.svg" style="display:none;"/>
-                    <b class="label">${this.label[i]}</b><br/><b class="hits">${this
-                        .valeur[i]}</b></span></a>
-               
+                  <a href="${this.data.data.datasets[0].links[i]}" target="_blank">
+                    <span style="transform: rotate(xxxxxxxxxdeg);border:solid 6px xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;">
+                      <img src="./donutchart/src/img/fiche-donut.svg" style="display:none;" />
+                      <b class="label">${this.label[i]}</b><br /><b class="hits">${this
+              .valeur[i]}</b></span></a>
+                
                 </div>`;
 
 
 
 
-                } else {
-                            
-                  loop[i] = html`
-                <div class="label${i + 1} labelindic pos-${i + 1}-${max} nolink"  style="transform: rotate(${positionDeg[i]}deg);">
-                <a>
-                  <span  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this.data.data.datasets[0].backgroundColor[i]};"><b class="label">${this.label[i]}</b><br/><b class="hits">${this.valeur[i]}</b></span></a>
+        } else {
+
+          loop[i] = html`
+                <div class="label${i + 1} labelindic pos-${i + 1}-${max} nolink" style="transform: rotate(xxxxxxxxxxxxxxxxxdeg);">
+                  <a>
+                    <span style="transform: rotate(xxxxxxxxxdeg);border:solid 6px xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;"><b
+                        class="label">${this.label[i]}</b><br /><b class="hits">${this.valeur[i]}</b></span></a>
                 </div>`;
 
 
 
-
-                }
-              }
-
-
-
-                 
 
         }
-        return loop;
+      }
+
+
+
+
+
     }
+    return loop;
+  }
 
 }
 

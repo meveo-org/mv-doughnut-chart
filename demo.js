@@ -76,6 +76,8 @@ export class MvChartBubbleDemo extends LitElement {
 
   firstUpdated() {
 
+
+
   }
 
   render() {
@@ -104,4 +106,4 @@ export class MvChartBubbleDemo extends LitElement {
   };
 }
 
-customElements.define("mv-chart-bubble-demo", MvChartBubbleDemo);
+customElements.define("mv-donut-demo", MvChartBubbleDemo);

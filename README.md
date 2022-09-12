@@ -8,9 +8,11 @@ To experiment with the MvChart component.
 
 1. Clone this repo.
 
-2. Serve the project from the root directory with some http server (best served with meveo itself)
+2. npm install
 
-3. Update the chart demo component in demo.js file
+3. npm run dev
+
+4. Update the chart demo component in demo.js file
 
 ## Sample usage
 
