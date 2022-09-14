@@ -7,6 +7,13 @@ export class MvChartBubbleDemo extends LitElement {
   static get properties() {
     return {
       theme: { type: String, attribute: true },
+      DOUGHNUT_CONFIG : {
+        type: Object,
+        attribute: false,
+        reflect: true        
+    }
+     
+
     };
   }
 
@@ -72,13 +79,19 @@ export class MvChartBubbleDemo extends LitElement {
   constructor() {
     super();
     this.theme = "light";
+    this.DOUGHNUT_CONFIG;
+    this.test = true;
   }
 
+
+
+
+  
   firstUpdated() {
 
 
-
   }
+
 
   render() {
     return html`
@@ -95,6 +108,17 @@ export class MvChartBubbleDemo extends LitElement {
       <mv-container class="main-container" .theme="${this.theme}">
         <mv-chart-donut .data="${DOUGHNUT_CONFIG}"></mv-chart-donut>
       </mv-container>
+
+
+
+
+
+
+
+
+
+
+ 
     `;
   }
 
@@ -104,6 +128,9 @@ export class MvChartBubbleDemo extends LitElement {
     } = originalEvent;
     this.theme = value;
   };
+
+
+
 }
 
 customElements.define("mv-donut-demo", MvChartBubbleDemo);

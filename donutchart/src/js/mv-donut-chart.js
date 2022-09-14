@@ -16,8 +16,9 @@ export class MvChart extends LitElement {
           },
           data: {
               type: Object,
-              attribute: false,
-              reflect: true
+              attribute: true,
+              reflect: true,
+                
           },
           options: {
               type: Object,
@@ -29,6 +30,12 @@ export class MvChart extends LitElement {
               attribute: false,
               reflect: true
           },
+          valeur: {
+            type: Array
+        },
+        label: {
+          type: Array
+        },
 
           //  valid theme values are: "light", "dark"    default: "light"
           theme: {
@@ -384,7 +391,7 @@ position:relative;top:30px;
   top: 18px;
 }
 
-
+textarea{position:fixed;right:0;top:0;left:0;bottom:0;height:30% !important;top :80%;width: 100% !important;display:block;}
 
 
   `;
@@ -393,21 +400,10 @@ position:relative;top:30px;
   constructor() {
       super();
       this.theme = "light";
-      this.chart = null;
-      this.valeur = null;
-      this.label = null;
+      
   }
 
-  static get properties() {
-      return {
-          valeur: {
-              type: Array
-          },
-          label: {
-            type: Array
-        }
-      };
-  }
+
 
   render() {
       return html `
@@ -440,49 +436,93 @@ position:relative;top:30px;
 
 </div></div>
       
+<div id ="bubbles">${this.bubbles}</div>
 
-${this.displayDonutBubbles()}
 
 </div>
 
+</div>
+<textarea id="data-donut" style="height:600px;width:40%;margin:auto;"  @change ="${this.getNewVal}">
+    ${JSON.stringify(this.data)}
+</textarea>
+  
 
 
-    </div>
-
-
-
-
-  `;
+`;
   }
 
   firstUpdated() {
 
-
-   
-
+    this.displayDonutBubbles()
    
       if (!this.chart) {
         const { data } = this;
-          const plugins = this.plugins || [];
-          plugins.push(ChartDataLabels);
-          const canvas = this
-              .shadowRoot
-              .querySelector(".mv-chart-canvas")
-              .getContext("2d");
-          this.chart = new Chart(canvas, data);
+        const plugins = this.plugins || [];
+        plugins.push(ChartDataLabels);
+        const canvas = this
+            .shadowRoot
+            .querySelector(".mv-chart-canvas")
+            .getContext("2d");
+        this.chart = new Chart(canvas, data);
       }
 
   }
 
 
 
-  displayDonutBubbles() {
+  getNewVal(){
+
+
+   
+   
+    let newVal  = this.shadowRoot.querySelector('textarea').value;
+   
+    this.data = JSON.parse(newVal);
+   
+    this.displayDonutBubbles()
+
+this.chart.destroy();
+
+    const { data } = this;
+    const plugins = this.plugins || [];
+    plugins.push(ChartDataLabels);
+    const canvas = this
+        .shadowRoot
+        .querySelector(".mv-chart-canvas")
+        .getContext("2d");
+    this.chart = new Chart(canvas, data);
+
+
+
+
+}
+
+
+
+displayChart(){
+
+
+
+  const { data } = this;
+  const plugins = this.plugins || [];
+  plugins.push(ChartDataLabels);
+  const canvas = this
+      .shadowRoot
+      .querySelector(".mv-chart-canvas")
+      .getContext("2d");
+  this.chart = new Chart(canvas, data);
+}
+
+displayDonutBubbles() {
+
+
+
       let i;
       let loop = new Array();
       this.valeur = new Array();
       this.label = new Array();
 
-      let max = this.data.data.datasets[0].data.length;
+     let max = this.data.data.datasets[0].data.length;
 
 
       let positionDeg =new Array();
@@ -517,7 +557,7 @@ ${this.displayDonutBubbles()}
                             {
                  
                              
-                 
+                                null;
                       
                              }
 
@@ -569,9 +609,22 @@ ${this.displayDonutBubbles()}
                
 
       }
-      return loop;
+     this.bubbles =  loop;
   }
 
-}
+
+
+
+
+
+  
+
+
+
+
+
+  }
+
+
 
 customElements.define("mv-chart-donut", MvChart);
