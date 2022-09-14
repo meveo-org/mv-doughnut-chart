@@ -73,15 +73,15 @@ export class MvChartBubbleDemo extends LitElement {
 
       textarea {
         position: fixed;
-        right: 0;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        height: 30% !important;
-        top: 80%;
-        width: 100% !important;
         display: block;
-      }
+        right: 0px;
+        top: 10%;
+height: 80% !important;
+        width: 300px !important;
+        box-shadow : 10px 10px 10px #ccc;
+        border-radius:20px 0px 0px 20px;
+        padding:50px 20px;
+}
     `
   }
 
@@ -127,7 +127,7 @@ export class MvChartBubbleDemo extends LitElement {
         style="height:600px;width:40%;margin:auto;"
         @change="${this.getNewVal}"
       >
-    ${JSON.stringify(DOUGHNUT_CONFIG)}
+    ${JSON.stringify(DOUGHNUT_CONFIG.data)}
 </textarea>
     `
   }
