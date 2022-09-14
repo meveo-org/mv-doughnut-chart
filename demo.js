@@ -1,20 +1,18 @@
-import { LitElement, html, css } from "lit";
+import { LitElement, html, css } from 'lit'
 //import "mv-container";
-import "./donutchart/src/js/mv-donut-chart.js";
-import { DOUGHNUT_CONFIG } from "./donutchart/src/js/data.js";
+import './donutchart/src/js/mv-donut-chart.js'
+import { DOUGHNUT_CONFIG } from './donutchart/src/js/data.js'
 
 export class MvChartBubbleDemo extends LitElement {
   static get properties() {
     return {
       theme: { type: String, attribute: true },
-      DOUGHNUT_CONFIG : {
+      DOUGHNUT_CONFIG: {
         type: Object,
         attribute: false,
-        reflect: true        
+        reflect: true,
+      },
     }
-     
-
-    };
   }
 
   static get styles() {
@@ -72,65 +70,85 @@ export class MvChartBubbleDemo extends LitElement {
         grid-template-rows: 290px 290px;
         grid-gap: 0;
       }
-      
-    `;
+
+      textarea {
+        position: fixed;
+        right: 0;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        height: 30% !important;
+        top: 80%;
+        width: 100% !important;
+        display: block;
+      }
+    `
   }
 
   constructor() {
-    super();
-    this.theme = "light";
-    this.DOUGHNUT_CONFIG;
-    this.test = true;
+    super()
+    this.theme = 'light'
+    this.DOUGHNUT_CONFIG
   }
 
-
-
-
-  
-  firstUpdated() {
-
-
-  }
-
+  firstUpdated() {}
 
   render() {
     return html`
       <fieldset>
         <legend>Theme</legend>
         <label>
-          <input type="radio" name="theme" value="light" checked @change="${this.changeTheme}" />Light
+          <input
+            type="radio"
+            name="theme"
+            value="light"
+            checked
+            @change="${this.changeTheme}"
+          />
+          Light
         </label>
         <label>
-          <input type="radio" name="theme" value="dark" @change="${this.changeTheme}" />Dark
+          <input
+            type="radio"
+            name="theme"
+            value="dark"
+            @change="${this.changeTheme}"
+          />
+          Dark
         </label>
       </fieldset>
-      
+
       <mv-container class="main-container" .theme="${this.theme}">
         <mv-chart-donut .data="${DOUGHNUT_CONFIG}"></mv-chart-donut>
       </mv-container>
 
-
-
-
-
-
-
-
-
-
- 
-    `;
+      <textarea
+        id="data-donut"
+        style="height:600px;width:40%;margin:auto;"
+        @change="${this.getNewVal}"
+      >
+    ${JSON.stringify(DOUGHNUT_CONFIG)}
+</textarea>
+    `
   }
 
   changeTheme = (originalEvent) => {
     const {
       target: { value },
-    } = originalEvent;
-    this.theme = value;
-  };
+    } = originalEvent
+    this.theme = value
+  }
 
-
-
+  getNewVal() {
+    let newVal = this.shadowRoot.querySelector('textarea').value
+    this.DOUGHNUT_CONFIG = JSON.parse(newVal)
+    let DOUGHNUT_CONFIG = this.DOUGHNUT_CONFIG
+    let elementChild = (this.shadowRoot.querySelector(
+      'mv-chart-donut',
+    ).data = DOUGHNUT_CONFIG)
+    this.shadowRoot.querySelector('mv-chart-donut').displayChart()
+    this.shadowRoot.querySelector('mv-chart-donut').displayDonutBubbles()
+  }
 }
 
-customElements.define("mv-donut-demo", MvChartBubbleDemo);
+customElements.define('mv-donut-demo', MvChartBubbleDemo)
