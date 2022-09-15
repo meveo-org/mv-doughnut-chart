@@ -1,6 +1,6 @@
 export const DOUGHNUT_CONFIG = {
   type: "doughnut",
-  result: Math.floor(Math.random() * 100) + "%",
+  result: "10%",
   imgUrl: "./donutchart/src/img/donut-img.svg",
   label: "Profil",
   data: {
@@ -17,13 +17,12 @@ export const DOUGHNUT_CONFIG = {
     ],
     datasets: [{
       label: 'Donut',
-      data: [Math.floor(Math.random() * 100),
-      Math.floor(Math.random() * 100),
-      Math.floor(Math.random() * 100),
-      Math.floor(Math.random() * 100),
-      Math.floor(Math.random() * 100),
-      Math.floor(Math.random() * 100)
-
+      data: [10,
+      20,
+      30,
+      12,
+      77,
+      123
     ],
       backgroundColor: [
 
@@ -81,4 +80,4 @@ export const DOUGHNUT_CONFIG = {
       enabled: false
     }
   }
-};
+}

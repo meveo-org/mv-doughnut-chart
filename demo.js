@@ -74,21 +74,23 @@ export class MvChartBubbleDemo extends LitElement {
       textarea {
         position: fixed;
         display: block;
-        right: 0px;
+        left: 0px;
         top: 10%;
-height: 80% !important;
-        width: 300px !important;
-        box-shadow : 10px 10px 10px #ccc;
-        border-radius:20px 0px 0px 20px;
-        padding:50px 20px;
-}
+        min-height: 80% !important;
+        min-width: 200px !important;
+        box-shadow: 10px 10px 10px #ccc;
+        border-radius: 0px 20px 20px 0px;
+        padding: 50px 20px;
+      }
+      #json {
+        display: none;
+      }
     `
   }
 
   constructor() {
     super()
     this.theme = 'light'
-    this.DOUGHNUT_CONFIG
   }
 
   firstUpdated() {}
@@ -127,8 +129,11 @@ height: 80% !important;
         style="height:600px;width:40%;margin:auto;"
         @change="${this.getNewVal}"
       >
-    ${JSON.stringify(DOUGHNUT_CONFIG.data)}
-</textarea>
+
+      ${JSON.stringify(DOUGHNUT_CONFIG.data)}
+      
+      </textarea
+      >
     `
   }
 
@@ -140,12 +145,20 @@ height: 80% !important;
   }
 
   getNewVal() {
+    let start =
+      '{"type":"doughnut","result":"10%","imgUrl":"./donutchart/src/img/donut-img.svg","label":"Profil","data":'
+
     let newVal = this.shadowRoot.querySelector('textarea').value
-    this.DOUGHNUT_CONFIG = JSON.parse(newVal)
-    let DOUGHNUT_CONFIG = this.DOUGHNUT_CONFIG
-    let elementChild = (this.shadowRoot.querySelector(
-      'mv-chart-donut',
-    ).data = DOUGHNUT_CONFIG)
+
+    let end =
+      ',"options":{"responsive":true,"maintainAspectRatio":false,"plugins":{"datalabels":{"color":"#ffffff","font":{"size":18,"weight":"bold"}}},"legend":{"display":false},"title":{"display":false},"animation":{"animateScale":true,"animateRotate":true},"tooltips":{"enabled":false}}}'
+
+    newVal = start + newVal + end
+
+    newVal = JSON.parse(newVal)
+
+    this.shadowRoot.querySelector('mv-chart-donut').data = newVal
+
     this.shadowRoot.querySelector('mv-chart-donut').displayChart()
     this.shadowRoot.querySelector('mv-chart-donut').displayDonutBubbles()
   }
