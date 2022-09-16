@@ -1,31 +1,19 @@
 import { LitElement, html, css } from 'lit'
 import { Chart, DoughnutController, ArcElement } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
+import { DOUGHNUT_CONFIG } from "./config.js";
 
 Chart.register(DoughnutController, ArcElement)
 
 export class MvChart extends LitElement {
   static get properties() {
     return {
-      type: {
-        type: String,
-        attribute: true,
-      },
       data: {
         type: Object,
         attribute: true,
         reflect: true,
       },
-      options: {
-        type: Object,
-        attribute: false,
-        reflect: true,
-      },
-      plugins: {
-        type: Object,
-        attribute: false,
-        reflect: true,
-      },
+
       valeur: {
         type: Array,
       },
@@ -415,7 +403,15 @@ export class MvChart extends LitElement {
       const canvas = this.shadowRoot
         .querySelector('.mv-chart-canvas')
         .getContext('2d')
-      this.chart = new Chart(canvas, data)
+
+      const chartConfig = {
+        ... DOUGHNUT_CONFIG,
+        label: this.label,
+        result: this.result,
+        data,
+      };
+
+      this.chart = new Chart(canvas, chartConfig)
     }
   }
 
