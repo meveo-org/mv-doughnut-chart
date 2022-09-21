@@ -1,17 +1,16 @@
 import { LitElement, html, css } from 'lit'
 //import "mv-container";
 import './donutchart/src/js/mv-donut-chart.js'
-import { DOUGHNUT_CONFIG } from './donutchart/src/js/data.js'
+import { DONUT_DATAS } from './donutchart/src/js/data.js'
+import { DONUT_OPTIONS } from './donutchart/src/js/config.js'
+const DONUT = JSON.parse('{   "type": "doughnut", "imgUrl": "./donutchart/src/img/donut-img.svg", "result":"10%", "label":"Profil", "data":' + JSON.stringify(DONUT_DATAS) + ',   "options": ' + JSON.stringify(DONUT_OPTIONS) + '}')
+
 
 export class MvChartBubbleDemo extends LitElement {
   static get properties() {
     return {
       theme: { type: String, attribute: true },
-      DOUGHNUT_CONFIG: {
-        type: Object,
-        attribute: false,
-        reflect: true,
-      },
+
     }
   }
 
@@ -76,15 +75,15 @@ export class MvChartBubbleDemo extends LitElement {
         display: block;
         left: 0px;
         top: 10%;
-        min-height: 80% !important;
+        min-height: 50% !important;
+        height:80% !important;
         min-width: 200px !important;
         box-shadow: 10px 10px 10px #ccc;
         border-radius: 0px 20px 20px 0px;
         padding: 50px 20px;
+        
       }
-      #json {
-        display: none;
-      }
+
     `
   }
 
@@ -93,47 +92,34 @@ export class MvChartBubbleDemo extends LitElement {
     this.theme = 'light'
   }
 
-  firstUpdated() {}
+  firstUpdated() {
+
+
+
+
+
+
+  }
 
   render() {
     return html`
       <fieldset>
         <legend>Theme</legend>
         <label>
-          <input
-            type="radio"
-            name="theme"
-            value="light"
-            checked
-            @change="${this.changeTheme}"
-          />
+          <input type="radio" name="theme" value="light" checked @change="${this.changeTheme}" />
           Light
         </label>
         <label>
-          <input
-            type="radio"
-            name="theme"
-            value="dark"
-            @change="${this.changeTheme}"
-          />
+          <input type="radio" name="theme" value="dark" @change="${this.changeTheme}" />
           Dark
         </label>
       </fieldset>
-
-      <mv-container class="main-container" .theme="${this.theme}">
-        <mv-chart-donut .data="${DOUGHNUT_CONFIG}"></mv-chart-donut>
-      </mv-container>
-
-      <textarea
-        id="data-donut"
-        style="height:600px;width:40%;margin:auto;"
-        @change="${this.getNewVal}"
-      >
-
-      ${JSON.stringify(DOUGHNUT_CONFIG.data)}
       
-      </textarea
-      >
+      <mv-container class="main-container" .theme="${this.theme}">
+        <mv-chart-donut .data="${DONUT}"></mv-chart-donut>
+      </mv-container>
+      
+      <textarea id="data-donut" style="height:600px;width:40%;margin:auto;" @change="${this.getNewVal}">${JSON.stringify(DONUT_DATAS)}</textarea>
     `
   }
 

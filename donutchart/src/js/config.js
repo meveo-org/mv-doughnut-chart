@@ -1,8 +1,4 @@
-export const DOUGHNUT_CONFIG = {
-  type: "doughnut",
-  imgUrl: "./donutchart/src/img/donut-img.svg",
-  options: {
-
+export const DONUT_OPTIONS = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -28,4 +24,4 @@ export const DOUGHNUT_CONFIG = {
       enabled: false
     }
   }
-}
+

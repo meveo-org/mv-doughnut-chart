@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit'
 import { Chart, DoughnutController, ArcElement } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
-import { DOUGHNUT_CONFIG } from "./config.js";
+
 
 Chart.register(DoughnutController, ArcElement)
 
@@ -404,14 +404,9 @@ export class MvChart extends LitElement {
         .querySelector('.mv-chart-canvas')
         .getContext('2d')
 
-      const chartConfig = {
-        ... DOUGHNUT_CONFIG,
-        label: this.label,
-        result: this.result,
-        data,
-      };
+  
 
-      this.chart = new Chart(canvas, chartConfig)
+      this.chart = new Chart(canvas, data)
     }
   }
 
@@ -468,7 +463,7 @@ export class MvChart extends LitElement {
                     .data.data.datasets[0].backgroundColor[i]};"
                 >
                   <img
-                    src="./web_modules/mv-chart/chartjs/donutchart/img/fiche-donut.svg"
+                    src="./donutchart/src/img/fiche-donut.svg"
                     style="display:none;"
                   />
                   <b class="label">${this.label[i]}</b>
