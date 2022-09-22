@@ -1,10 +1,14 @@
-export const DONUT_DATAS = {
+export const DATA = {
+  type :  "doughnut",
+  imgUrl : "./donutchart/src/img/donut-img.svg",
+  result : "10%",
+  label : "Profil",
     names: [
       "Pinterest",
       "Facebook",
       "Youtube",
-      "Instagram",
-      "Youtube",
+      "Google",
+      "tiktok",
       "Instagram"
     ],
     datasets: [{
@@ -28,20 +32,16 @@ export const DONUT_DATAS = {
 
       ],
       links: [
-        "",
-        "http://microsoft.com",
-        "http://nokia.com",
-        "http://huawai.com",
+        "http://pinterest.com",
+        "http://facebook.com",
+        "http://youtube.com",
         "http://google.com",
         "http://linux.org",
-        "http://linux.org",
-        "http://linux.org"
+        "http://tiktok.com",
+        "http://instagram.com"
 
       ],
-      hoverOffset: 4,
-      doughnut: {
-        borderWidth: 100
-      }
+
     }]
   }
  

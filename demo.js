@@ -1,9 +1,8 @@
 import { LitElement, html, css } from 'lit'
 //import "mv-container";
 import './donutchart/src/js/mv-donut-chart.js'
-import { DONUT_DATAS } from './donutchart/src/js/data.js'
-import { DONUT_OPTIONS } from './donutchart/src/js/config.js'
-const DONUT = JSON.parse('{   "type": "doughnut", "imgUrl": "./donutchart/src/img/donut-img.svg", "result":"10%", "label":"Profil", "data":' + JSON.stringify(DONUT_DATAS) + ',   "options": ' + JSON.stringify(DONUT_OPTIONS) + '}')
+import { DATA } from './donutchart/src/js/data.js'
+
 
 
 export class MvChartBubbleDemo extends LitElement {
@@ -94,11 +93,6 @@ export class MvChartBubbleDemo extends LitElement {
 
   firstUpdated() {
 
-
-
-
-
-
   }
 
   render() {
@@ -116,10 +110,10 @@ export class MvChartBubbleDemo extends LitElement {
       </fieldset>
       
       <mv-container class="main-container" .theme="${this.theme}">
-        <mv-chart-donut .data="${DONUT}"></mv-chart-donut>
+        <mv-chart-donut .data="${DATA}"></mv-chart-donut>
       </mv-container>
       
-      <textarea id="data-donut" style="height:600px;width:40%;margin:auto;" @change="${this.getNewVal}">${JSON.stringify(DONUT_DATAS)}</textarea>
+      <textarea id="data-donut" style="height:600px;width:40%;margin:auto;" @change="${this.getNewVal}">${JSON.stringify(DATA)}</textarea>
     `
   }
 
@@ -131,19 +125,16 @@ export class MvChartBubbleDemo extends LitElement {
   }
 
   getNewVal() {
-    let start =
-      '{"type":"doughnut","result":"10%","imgUrl":"./donutchart/src/img/donut-img.svg","label":"Profil","data":'
+
 
     let newVal = this.shadowRoot.querySelector('textarea').value
 
-    let end =
-      ',"options":{"responsive":true,"maintainAspectRatio":false,"plugins":{"datalabels":{"color":"#ffffff","font":{"size":18,"weight":"bold"}}},"legend":{"display":false},"title":{"display":false},"animation":{"animateScale":true,"animateRotate":true},"tooltips":{"enabled":false}}}'
-
-    newVal = start + newVal + end
-
     newVal = JSON.parse(newVal)
 
-    this.shadowRoot.querySelector('mv-chart-donut').data = newVal
+    this.shadowRoot.querySelector('mv-chart-donut').data.data = newVal
+
+
+
 
     this.shadowRoot.querySelector('mv-chart-donut').displayChart()
     this.shadowRoot.querySelector('mv-chart-donut').displayDonutBubbles()
