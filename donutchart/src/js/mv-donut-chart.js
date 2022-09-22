@@ -31,7 +31,13 @@ const OPTIONS = {
 
 
 
-Chart.register(DoughnutController, ArcElement)
+Chart.register(DoughnutController, ArcElement);
+
+function convertToChrtJsFormat(input) {
+  const formattedInput = {};
+
+  return formattedInput;
+}
 
 export class MvChart extends LitElement {
   static get properties() {
@@ -442,7 +448,7 @@ export class MvChart extends LitElement {
 
     this.chart = new Chart(canvas, {
       options: OPTIONS,
-      data: this.data,
+      data: this.data, //TODO: call convertToChrtJsFormat to format the data for chart-js
       type: "doughnut",
     })
   }
@@ -456,6 +462,7 @@ export class MvChart extends LitElement {
     let ratio = 360 / max
     let pos = new Array()
 
+    // TODO: Modify the algo to adapt to the new data format
     for (let i = 0; i < max; i++) {
       if (this.data.datasets[0].data[i]) {
         const valeur = this.data.datasets[0].data[i]
