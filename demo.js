@@ -1,15 +1,14 @@
 import { LitElement, html, css } from 'lit'
 //import "mv-container";
 import './donutchart/src/js/mv-donut-chart.js'
-import { DATA } from './donutchart/src/js/data.js'
 
-
+import { DATA } from "./donutchart/src/js/data.js";
 
 export class MvChartBubbleDemo extends LitElement {
   static get properties() {
     return {
       theme: { type: String, attribute: true },
-
+      _data: { type: Object, state: true, reflect: true }
     }
   }
 
@@ -89,13 +88,20 @@ export class MvChartBubbleDemo extends LitElement {
   constructor() {
     super()
     this.theme = 'light'
+    this._data = DATA;
   }
 
   firstUpdated() {
 
   }
 
+  updated() {
+    console.log("Updated");
+  }
+
   render() {
+    console.log("Rendering !", this._data);
+
     return html`
       <fieldset>
         <legend>Theme</legend>
@@ -110,10 +116,13 @@ export class MvChartBubbleDemo extends LitElement {
       </fieldset>
       
       <mv-container class="main-container" .theme="${this.theme}">
-        <mv-chart-donut .data="${DATA}"></mv-chart-donut>
+        <mv-chart-donut .data="${this._data}"
+          display-label="Profil"
+          display-value="10%"
+        ></mv-chart-donut>
       </mv-container>
       
-      <textarea id="data-donut" style="height:600px;width:40%;margin:auto;" @change="${this.getNewVal}">${JSON.stringify(DATA)}</textarea>
+      <textarea id="data-donut" style="height:600px;width:40%;margin:auto;" @change="${this.getNewVal}">${JSON.stringify(this._data, null, 2)}</textarea>
     `
   }
 
@@ -129,15 +138,12 @@ export class MvChartBubbleDemo extends LitElement {
 
     let newVal = this.shadowRoot.querySelector('textarea').value
 
-    newVal = JSON.parse(newVal)
+    this._data = JSON.parse(newVal);
 
-    this.shadowRoot.querySelector('mv-chart-donut').data.data = newVal
+    // this.shadowRoot.querySelector('mv-chart-donut').data.data = newVal
 
-
-
-
-    this.shadowRoot.querySelector('mv-chart-donut').displayChart()
-    this.shadowRoot.querySelector('mv-chart-donut').displayDonutBubbles()
+    // this.shadowRoot.querySelector('mv-chart-donut').displayChart()
+    // this.shadowRoot.querySelector('mv-chart-donut').displayDonutBubbles()
   }
 }
 

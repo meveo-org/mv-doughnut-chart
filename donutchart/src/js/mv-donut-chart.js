@@ -38,16 +38,11 @@ export class MvChart extends LitElement {
     return {
       data: {
         type: Object,
-        attribute: true,
         reflect: true,
       },
 
-      valeur: {
-        type: Array,
-      },
-      label: {
-        type: Array,
-      },
+      displayValue: { type: String, attribute: "display-value", reflect: true },
+      displayLabel: { type: String, attribute: "display-label", reflect: true },
 
       //  valid theme values are: "light", "dark"    default: "light"
       theme: {
@@ -400,13 +395,6 @@ export class MvChart extends LitElement {
     super()
     this.theme = 'light'
     this.chart =null
-
-
-
-
-
-
-    
   }
 
   render() {
@@ -419,84 +407,59 @@ export class MvChart extends LitElement {
                 <canvas class="mv-chart-canvas"></canvas>
               </div>
 
-              ${this.center}
+              <div class="center">
+                <div class="inner">
+                  <img src="./donutchart/src/img/donut-img.svg" />
+                  <br />
+                  <span class="title">${this.displayLabel}</span>
+                  <br />
+                  <span class="result">${this.displayValue}</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div id="bubbles">${this.bubbles}</div>
+          <div id="bubbles">${this.displayDonutBubbles()}</div>
         </div>
       </div>
     `
   }
 
-  firstUpdated() {
-
-
-    this.loadDatas()
-    this.displayDonutBubbles()
+  updated() {
     this.displayChart()
-
-
   }
 
-
-loadDatas(){
-
-
-  let DATAS = this.data
- 
-
-  this.data.options = OPTIONS 
-  this.data.data = DATAS
-
-
-}
-
-
   displayChart() {
-
     if (this.chart){
       this.chart.destroy()
-
-
- 
     }
-    
 
-
-
-
-
-
-    const { data } = this
     const plugins = this.plugins || []
     plugins.push(ChartDataLabels)
     const canvas = this.shadowRoot
       .querySelector('.mv-chart-canvas')
       .getContext('2d')
-    this.chart = new Chart(canvas, data)
 
-
+    this.chart = new Chart(canvas, {
+      options: OPTIONS,
+      data: this.data,
+      type: "doughnut",
+    })
   }
 
   displayDonutBubbles() {
-    let i
     let loop = new Array()
-    this.valeur = new Array()
-    this.label = new Array()
 
-    let max = this.data.datasets[0].data.length
+    let max = this.data.datasets[0].data.length;
 
     let positionDeg = new Array()
     let ratio = 360 / max
     let pos = new Array()
 
-    for (i = 0; i < max; i++) {
-      if (this.data.data.datasets[0].data[i]) {
-        this.valeur[i] = this.data.data.datasets[0].data[i]
-
-        this.label[i] = this.data.names[i]
-        this.label[i] = this.label[i].substr(0, 25)
+    for (let i = 0; i < max; i++) {
+      if (this.data.datasets[0].data[i]) {
+        const valeur = this.data.datasets[0].data[i]
+        const label = this.data.names[i].substr(0, 25)
 
         positionDeg[i] = ratio * i
 
@@ -508,7 +471,7 @@ loadDatas(){
           null
         }
 
-        if (this.data.data.datasets[0].links[i] != '') {
+        if (this.data.datasets[0].links[i] != '') {
           loop[i] = html`
             <div
               class="label${i + 1} labelindic pos-${i + 1}-${max}"
@@ -516,16 +479,15 @@ loadDatas(){
             >
               <a href="${this.data.datasets[0].links[i]}" target="_blank">
                 <span
-                  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this
-                    .data.datasets[0].backgroundColor[i]};"
+                  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this.data.datasets[0].backgroundColor[i]};"
                 >
                   <img
                     src="./donutchart/src/img/fiche-donut.svg"
                     style="display:none;"
                   />
-                  <b class="label">${this.label[i]}</b>
+                  <b class="label">${label}</b>
                   <br />
-                  <b class="hits">${this.valeur[i]}</b>
+                  <b class="hits">${valeur}</b>
                 </span>
               </a>
             </div>
@@ -538,12 +500,11 @@ loadDatas(){
             >
               <a>
                 <span
-                  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this
-                    .data.datasets[0].backgroundColor[i]};"
+                  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this.data.datasets[0].backgroundColor[i]};"
                 >
-                  <b class="label">${this.label[i]}</b>
+                  <b class="label">${label}</b>
                   <br />
-                  <b class="hits">${this.valeur[i]}</b>
+                  <b class="hits">${valeur}</b>
                 </span>
               </a>
             </div>
@@ -552,19 +513,7 @@ loadDatas(){
       }
     }
 
-    this.center = html`
-      <div class="center">
-        <div class="inner">
-          <img src="${this.data.imgUrl}" />
-          <br />
-          <span class="title">${this.data.label}</span>
-          <br />
-          <span class="result">${this.data.result}</span>
-        </div>
-      </div>
-    `
-
-    this.bubbles = loop
+    return loop;
   }
 }
 
