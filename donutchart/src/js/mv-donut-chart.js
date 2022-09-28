@@ -2,42 +2,11 @@ import { LitElement, html, css } from 'lit'
 import { Chart, DoughnutController, ArcElement } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 
-const OPTIONS = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    datalabels: {
-      color: "#ffffff",
-      font: {
-        size: 18,
-        weight: "bold"
-      }
-    }
-  },
-  legend: {
-    display: false
-  },
-  title: {
-    display: false
-  },
-  animation: {
-    animateScale: true,
-    animateRotate: true
-  },
-  tooltips: {
-    enabled: false
-  }
-}
-
 
 
 Chart.register(DoughnutController, ArcElement);
 
-function convertToChrtJsFormat(input) {
-  const formattedInput = {};
 
-  return formattedInput;
-}
 
 export class MvChart extends LitElement {
   static get properties() {
@@ -405,6 +374,11 @@ export class MvChart extends LitElement {
 
   render() {
     return html`
+
+
+${this.convertToChrtJsFormat(this.data)}
+
+
       <div style="transform: scale(0.5);margin-top:  100px;">
         <div class="big-circle">
           <div class="back-stroke">
@@ -425,20 +399,35 @@ export class MvChart extends LitElement {
             </div>
           </div>
 
-          <div id="bubbles">${this.displayDonutBubbles()}</div>
+          <div id="bubbles">${ this.displayDonutBubbles()}</div>
         </div>
       </div>
     `
   }
 
   updated() {
+
+
+    
     this.displayChart()
+    
+   
   }
 
   displayChart() {
+
+
+
+
     if (this.chart){
+
       this.chart.destroy()
+
+
     }
+
+
+
 
     const plugins = this.plugins || []
     plugins.push(ChartDataLabels)
@@ -446,17 +435,71 @@ export class MvChart extends LitElement {
       .querySelector('.mv-chart-canvas')
       .getContext('2d')
 
-    this.chart = new Chart(canvas, {
-      options: OPTIONS,
-      data: this.data, //TODO: call convertToChrtJsFormat to format the data for chart-js
-      type: "doughnut",
-    })
+    this.chart = new Chart(canvas, this.data)
+
+
+
+
+   
   }
+
+
+
+
+
+  
+  convertToChrtJsFormat(input) {
+
+
+    let backgroundColors=[]  
+    let linksIn=[]
+    let names =[]
+    let datas=[]
+
+
+      var obj = input;
+
+     
+
+
+
+            let i = 0;
+
+                for(var key in obj) {
+                  if( i<200 ){
+                  var value = obj[key]
+
+                    names.push('"'+value.name+'"')
+                    datas.push('"'+value.data+'"')
+
+
+
+                    backgroundColors.push('"'+value.backgroundColor+'"')
+                    linksIn.push('"' + value.link + '"')
+                    i++
+                
+
+                  }
+                }
+
+                let reformatData = '{"type" : "doughnut" , "result" : "100%", "imgUrl": "./web_modules/mv-chart/chartjs/donutchart/img/donut-img.svg", "label" :"Profil", "data" :{ "label" : "donut","names" : ['+names+'], "datasets" :[{ "label" : "donut" , "data" : ['+datas+'],"links" : ['+linksIn+'], "backgroundColor" : ['+backgroundColors+']}],"hoverOffset": 4, "doughnut": {"borderWidth": 100 }},"options" :{"responsive" : true, "maintainAspectRatio" : false,"plugins": {  "datalabels": {"color": "#ffffff", "font": { "size": 18, "weight": "bold" } }  }, "legend": {  "display": false }, "title": {"display": false }, "animation": { "animateScale": true, "animateRotate": true }, "tooltips": { "enabled": false }}}'
+
+
+
+                this.data= JSON.parse(reformatData)
+
+                console.log(this.data)
+
+    }
+
+
+
+
 
   displayDonutBubbles() {
     let loop = new Array()
 
-    let max = this.data.datasets[0].data.length;
+    let max = this.data.data.datasets[0].data.length;
 
     let positionDeg = new Array()
     let ratio = 360 / max
@@ -464,9 +507,9 @@ export class MvChart extends LitElement {
 
     // TODO: Modify the algo to adapt to the new data format
     for (let i = 0; i < max; i++) {
-      if (this.data.datasets[0].data[i]) {
-        const valeur = this.data.datasets[0].data[i]
-        const label = this.data.names[i].substr(0, 25)
+      if (this.data.data.datasets[0].data[i]) {
+        const valeur = this.data.data.datasets[0].data[i]
+        const label = this.data.data.names[i].substr(0, 25)
 
         positionDeg[i] = ratio * i
 
@@ -478,15 +521,15 @@ export class MvChart extends LitElement {
           null
         }
 
-        if (this.data.datasets[0].links[i] != '') {
+        if (this.data.data.datasets[0].links[i] != '') {
           loop[i] = html`
             <div
               class="label${i + 1} labelindic pos-${i + 1}-${max}"
               style="transform: rotate(${positionDeg[i]}deg);"
             >
-              <a href="${this.data.datasets[0].links[i]}" target="_blank">
+              <a href="${this.data.data.datasets[0].links[i]}" target="_blank">
                 <span
-                  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this.data.datasets[0].backgroundColor[i]};"
+                  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this.data.data.datasets[0].backgroundColor[i]};"
                 >
                   <img
                     src="./donutchart/src/img/fiche-donut.svg"
@@ -507,7 +550,7 @@ export class MvChart extends LitElement {
             >
               <a>
                 <span
-                  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this.data.datasets[0].backgroundColor[i]};"
+                  style="transform: rotate(${pos[i]}deg);border:solid 6px ${this.data.data.datasets[0].backgroundColor[i]};"
                 >
                   <b class="label">${label}</b>
                   <br />

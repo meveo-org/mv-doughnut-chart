@@ -100,7 +100,7 @@ export class MvChartBubbleDemo extends LitElement {
   }
 
   render() {
-    console.log("Rendering !", this._data);
+    console.log("Rendering !");
 
     return html`
       <fieldset>
@@ -139,6 +139,7 @@ export class MvChartBubbleDemo extends LitElement {
     let newVal = this.shadowRoot.querySelector('textarea').value
 
     this._data = JSON.parse(newVal);
+    
 
     // this.shadowRoot.querySelector('mv-chart-donut').data.data = newVal
 
