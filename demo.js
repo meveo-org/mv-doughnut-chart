@@ -92,6 +92,9 @@ export class MvChartBubbleDemo extends LitElement {
         }
 
 
+        
+
+
     `
   }
 
@@ -127,9 +130,15 @@ export class MvChartBubbleDemo extends LitElement {
       
       <mv-container class="main-container" .theme="${this.theme}">
         <mv-chart-donut .data="${this._data}"
-          display-label="Profil"
-          display-result="100%"
-        ></mv-chart-donut>
+        >
+      
+        <img src="./donutchart/src/img/donut-img.svg"     style="width: 100px;position: relative;top: 40px;"/>
+                  <br />
+                  <span class="title" style="font-size: 40px;position: relative;top: 50px;">Profil</span>
+                  <br />
+                  <span class="result" style="font-size: 150px;position: relative; top: 25px;">10%</span>
+                
+                </mv-chart-donut>
       </mv-container>
       
       <textarea id="data-donut" style="height:600px;width:40%;margin:auto;">${JSON.stringify(this._data, null, 2)}</textarea>

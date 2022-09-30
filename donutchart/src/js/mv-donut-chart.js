@@ -253,9 +253,7 @@ export class MvChart extends LitElement {
       }
 
       .inner .title {
-        font-size: 40px;
-        position: relative;
-        top: 50px;
+
       }
 
       .inner img {
@@ -390,11 +388,10 @@ ${this.convertToChrtJsFormat(this.data)}
 
               <div class="center">
                 <div class="inner">
-                  <img src="./donutchart/src/img/donut-img.svg" />
-                  <br />
-                  <span class="title">${this.displayLabel}</span>
-                  <br />
-                  <span class="result">${this.displayResult}</span>
+
+                <slot>
+              </slot>
+                 
                 </div>
               </div>
             </div>
@@ -483,9 +480,16 @@ ${this.convertToChrtJsFormat(this.data)}
                   }
                 }
 
-                let reformatData = '{"type" : "doughnut" , "result" : "100%", "imgUrl": "./web_modules/mv-chart/chartjs/donutchart/img/donut-img.svg", "label" :"Profil", "data" :{ "label" : "donut","names" : ['+names+'], "datasets" :[{ "label" : "donut" , "data" : ['+datas+'],"links" : ['+linksIn+'], "backgroundColor" : ['+backgroundColors+']}],"hoverOffset": 4, "doughnut": {"borderWidth": 100 }},"options" :{"responsive" : true, "maintainAspectRatio" : false,"plugins": {  "datalabels": {"color": "#ffffff", "font": { "size": 18, "weight": "bold" } }  }, "legend": {  "display": false }, "title": {"display": false }, "animation": { "animateScale": true, "animateRotate": true }, "tooltips": { "enabled": false }}}'
+                let reformatData = '{ "result" : "100%", "imgUrl": "./web_modules/mv-chart/chartjs/donutchart/img/donut-img.svg", "label" :"Profil", "data" :{ "label" : "donut","names" : ['+names+'], "datasets" :[{ "label" : "donut" , "data" : ['+datas+'],"links" : ['+linksIn+'], "backgroundColor" : ['+backgroundColors+']}],"hoverOffset": 4, "doughnut": {"borderWidth": 100 }},"options" :{"responsive" : true, "maintainAspectRatio" : false,"plugins": {  "datalabels": {"color": "#ffffff", "font": { "size": 18, "weight": "bold" } }  }, "legend": {  "display": false }, "title": {"display": false }, "animation": { "animateScale": true, "animateRotate": true }, "tooltips": { "enabled": false }}}'
 
-                this.data= JSON.parse(reformatData)
+                this.data = JSON.parse(reformatData)
+
+                this.data.data.type = "doughnut"
+
+
+
+
+
 
                 console.log(this.data)
 
