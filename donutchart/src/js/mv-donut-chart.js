@@ -480,11 +480,11 @@ ${this.convertToChrtJsFormat(this.data)}
                   }
                 }
 
-                let reformatData = '{ "result" : "100%", "imgUrl": "./web_modules/mv-chart/chartjs/donutchart/img/donut-img.svg", "label" :"Profil", "data" :{ "label" : "donut","names" : ['+names+'], "datasets" :[{ "label" : "donut" , "data" : ['+datas+'],"links" : ['+linksIn+'], "backgroundColor" : ['+backgroundColors+']}],"hoverOffset": 4, "doughnut": {"borderWidth": 100 }},"options" :{"responsive" : true, "maintainAspectRatio" : false,"plugins": {  "datalabels": {"color": "#ffffff", "font": { "size": 18, "weight": "bold" } }  }, "legend": {  "display": false }, "title": {"display": false }, "animation": { "animateScale": true, "animateRotate": true }, "tooltips": { "enabled": false }}}'
+                let reformatData = '{ "type" : "doughnut" , "result" : "100%", "imgUrl": "./web_modules/mv-chart/chartjs/donutchart/img/donut-img.svg", "label" :"Profil", "data" :{ "label" : "donut","names" : ['+names+'], "datasets" :[{ "label" : "donut" , "data" : ['+datas+'],"links" : ['+linksIn+'], "backgroundColor" : ['+backgroundColors+']}],"hoverOffset": 4, "doughnut": {"borderWidth": 100 }},"options" :{"responsive" : true, "maintainAspectRatio" : false,"plugins": {  "datalabels": {"color": "#ffffff", "font": { "size": 18, "weight": "bold" } }  }, "legend": {  "display": false }, "title": {"display": false }, "animation": { "animateScale": true, "animateRotate": true }, "tooltips": { "enabled": false }}}'
 
                 this.data = JSON.parse(reformatData)
 
-                this.data.data.type = "doughnut"
+               // this.data.data.type = "doughnut"
 
 
 
