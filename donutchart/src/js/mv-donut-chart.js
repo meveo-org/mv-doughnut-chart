@@ -16,8 +16,9 @@ export class MvChart extends LitElement {
         reflect: true,
       },
 
-      displayValue: { type: String, attribute: "display-value", reflect: true },
+      displayResult: { type: String, attribute: "display-result", reflect: true },
       displayLabel: { type: String, attribute: "display-label", reflect: true },
+
 
       //  valid theme values are: "light", "dark"    default: "light"
       theme: {
@@ -393,7 +394,7 @@ ${this.convertToChrtJsFormat(this.data)}
                   <br />
                   <span class="title">${this.displayLabel}</span>
                   <br />
-                  <span class="result">${this.displayValue}</span>
+                  <span class="result">${this.displayResult}</span>
                 </div>
               </div>
             </div>
@@ -483,8 +484,6 @@ ${this.convertToChrtJsFormat(this.data)}
                 }
 
                 let reformatData = '{"type" : "doughnut" , "result" : "100%", "imgUrl": "./web_modules/mv-chart/chartjs/donutchart/img/donut-img.svg", "label" :"Profil", "data" :{ "label" : "donut","names" : ['+names+'], "datasets" :[{ "label" : "donut" , "data" : ['+datas+'],"links" : ['+linksIn+'], "backgroundColor" : ['+backgroundColors+']}],"hoverOffset": 4, "doughnut": {"borderWidth": 100 }},"options" :{"responsive" : true, "maintainAspectRatio" : false,"plugins": {  "datalabels": {"color": "#ffffff", "font": { "size": 18, "weight": "bold" } }  }, "legend": {  "display": false }, "title": {"display": false }, "animation": { "animateScale": true, "animateRotate": true }, "tooltips": { "enabled": false }}}'
-
-
 
                 this.data= JSON.parse(reformatData)
 

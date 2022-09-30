@@ -82,6 +82,16 @@ export class MvChartBubbleDemo extends LitElement {
         
       }
 
+      #button-change {z-index: 9999;
+        float: right;
+        position: fixed;
+        bottom: 20px;
+        background-color: #fff;
+        border: solid 1px #000;
+        padding: 10px 50px;
+        }
+
+
     `
   }
 
@@ -118,11 +128,15 @@ export class MvChartBubbleDemo extends LitElement {
       <mv-container class="main-container" .theme="${this.theme}">
         <mv-chart-donut .data="${this._data}"
           display-label="Profil"
-          display-value="10%"
+          display-result="100%"
         ></mv-chart-donut>
       </mv-container>
       
-      <textarea id="data-donut" style="height:600px;width:40%;margin:auto;" @change="${this.getNewVal}">${JSON.stringify(this._data, null, 2)}</textarea>
+      <textarea id="data-donut" style="height:600px;width:40%;margin:auto;">${JSON.stringify(this._data, null, 2)}</textarea>
+
+      <input type="submit" value="Reload !" id ="button-change" @click="${this.getNewVal}">
+
+
     `
   }
 
@@ -141,10 +155,6 @@ export class MvChartBubbleDemo extends LitElement {
     this._data = JSON.parse(newVal);
     
 
-    // this.shadowRoot.querySelector('mv-chart-donut').data.data = newVal
-
-    // this.shadowRoot.querySelector('mv-chart-donut').displayChart()
-    // this.shadowRoot.querySelector('mv-chart-donut').displayDonutBubbles()
   }
 }
 
