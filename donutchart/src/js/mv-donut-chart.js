@@ -2,11 +2,7 @@ import { LitElement, html, css } from 'lit'
 import { Chart, DoughnutController, ArcElement } from 'chart.js'
 import ChartDataLabels from 'chartjs-plugin-datalabels'
 
-
-
-Chart.register(DoughnutController, ArcElement);
-
-
+Chart.register(DoughnutController, ArcElement)
 
 export class MvChart extends LitElement {
   static get properties() {
@@ -16,9 +12,12 @@ export class MvChart extends LitElement {
         reflect: true,
       },
 
-      displayResult: { type: String, attribute: "display-result", reflect: true },
-      displayLabel: { type: String, attribute: "display-label", reflect: true },
-
+      displayResult: {
+        type: String,
+        attribute: 'display-result',
+        reflect: true,
+      },
+      displayLabel: { type: String, attribute: 'display-label', reflect: true },
 
       //  valid theme values are: "light", "dark"    default: "light"
       theme: {
@@ -253,7 +252,6 @@ export class MvChart extends LitElement {
       }
 
       .inner .title {
-
       }
 
       .inner img {
@@ -356,10 +354,11 @@ export class MvChart extends LitElement {
       .mv-chart-canvas {
         display: block;
         box-sizing: border-box;
-        height: 540px !important;
-        width: 720px !important;
-        left: -155px;
+        left: -65px;
         position: relative;
+        top: 18px;
+        height: 540px !important;
+        width: 540px !important;
         top: 18px;
       }
     `
@@ -368,15 +367,13 @@ export class MvChart extends LitElement {
   constructor() {
     super()
     this.theme = 'light'
-    this.chart =null
+    this.chart = null
   }
 
   render() {
     return html`
-
-
-${this.convertToChrtJsFormat(this.data)}
-
+      ${this.convertToChrtJsFormat(this.data)}
+ 
 
       <div style="transform: scale(0.5);margin-top:  100px;">
         <div class="big-circle">
@@ -388,44 +385,30 @@ ${this.convertToChrtJsFormat(this.data)}
 
               <div class="center">
                 <div class="inner">
-
-                <slot>
-              </slot>
-                 
+                  <slot></slot>
                 </div>
               </div>
             </div>
           </div>
 
-          <div id="bubbles">${ this.displayDonutBubbles()}</div>
+          <div id="bubbles">     ${this.displayDonutBubbles()}</div>
         </div>
       </div>
     `
   }
 
   updated() {
+    this.displayDonutBubbles()
 
-
-    
     this.displayChart()
-    
-   
   }
 
   displayChart() {
 
 
-
-
-    if (this.chart){
-
+    if (this.chart) {
       this.chart.destroy()
-
-
     }
-
-
-
 
     const plugins = this.plugins || []
     plugins.push(ChartDataLabels)
@@ -434,85 +417,71 @@ ${this.convertToChrtJsFormat(this.data)}
       .getContext('2d')
 
     this.chart = new Chart(canvas, this.data)
-
-
-
-
-   
   }
 
-
-
-
-
-  
   convertToChrtJsFormat(input) {
+    let backgroundColors = []
+    let linksIn = []
+    let names = []
+    let datas = []
 
+    var obj = input
 
-    let backgroundColors=[]  
-    let linksIn=[]
-    let names =[]
-    let datas=[]
+    let i = 0
 
+    for (var key in obj) {
+      if (i < 200) {
+        var value = obj[key]
 
-      var obj = input;
+        names.push(value.name)
+        datas.push('"' + value.data + '"')
 
-     
-
-
-
-            let i = 0;
-
-                for(var key in obj) {
-                  if( i<200 ){
-                  var value = obj[key]
-
-                    names.push('"'+value.name+'"')
-                    datas.push('"'+value.data+'"')
-
-
-
-                    backgroundColors.push('"'+value.backgroundColor+'"')
-                    linksIn.push('"' + value.link + '"')
-                    i++
-                
-
-                  }
-                }
-
-                let reformatData = '{ "type" : "doughnut" , "result" : "100%", "imgUrl": "./web_modules/mv-chart/chartjs/donutchart/img/donut-img.svg", "label" :"Profil", "data" :{ "label" : "donut","names" : ['+names+'], "datasets" :[{ "label" : "donut" , "data" : ['+datas+'],"links" : ['+linksIn+'], "backgroundColor" : ['+backgroundColors+']}],"hoverOffset": 4, "doughnut": {"borderWidth": 100 }},"options" :{"responsive" : true, "maintainAspectRatio" : false,"plugins": {  "datalabels": {"color": "#ffffff", "font": { "size": 18, "weight": "bold" } }  }, "legend": {  "display": false }, "title": {"display": false }, "animation": { "animateScale": true, "animateRotate": true }, "tooltips": { "enabled": false }}}'
-
-                this.data = JSON.parse(reformatData)
-
-               // this.data.data.type = "doughnut"
-
-
-
-
-
-
-                console.log(this.data)
-
+        backgroundColors.push('"' + value.backgroundColor + '"')
+        linksIn.push('"' + value.link + '"')
+        i++
+      }
     }
 
+    this.data = {}
 
+    this.data.type = 'doughnut'
+    this.data.label = 'Profil'
+    this.data.data = {}
+    this.data.data.label = 'donut'
+    this.data.data.names = names
+    this.data.data.datasets = [
+      JSON.parse(
+        '{ "label" : "donut" , "data" : [' +
+          datas +
+          '],"links" : [' +
+          linksIn +
+          '], "backgroundColor" : [' +
+          backgroundColors +
+          ']}',
+      ),
+    ]
 
-
+    this.data.data.hoverOffset = 4
+    this.data.data.doughnut = {}
+    this.data.data.doughnut.borderWidth = 100
+  }
 
   displayDonutBubbles() {
+
+    console.log (this.data)
     let loop = new Array()
 
-    let max = this.data.data.datasets[0].data.length;
+    let max = this.data.data.datasets[0].data.length
 
     let positionDeg = new Array()
     let ratio = 360 / max
     let pos = new Array()
 
-    // TODO: Modify the algo to adapt to the new data format
+
     for (let i = 0; i < max; i++) {
       if (this.data.data.datasets[0].data[i]) {
         const valeur = this.data.data.datasets[0].data[i]
-        const label = this.data.data.names[i].substr(0, 25)
+        const label = this.data.data.names[i]
 
         positionDeg[i] = ratio * i
 
@@ -566,7 +535,7 @@ ${this.convertToChrtJsFormat(this.data)}
       }
     }
 
-    return loop;
+    return loop
   }
 }
 
