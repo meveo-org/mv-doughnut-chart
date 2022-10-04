@@ -1,10 +1,10 @@
-import { LitElement, html, css } from 'lit'
-import { Chart, DoughnutController, ArcElement } from 'chart.js'
-import ChartDataLabels from 'chartjs-plugin-datalabels'
+import { LitElement, html, css } from 'lit';
+import { Chart, DoughnutController, ArcElement } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-Chart.register(DoughnutController, ArcElement)
+Chart.register(DoughnutController, ArcElement);
 
-export class MvChart extends LitElement {
+export default class MvChart extends LitElement {
   static get properties() {
     return {
       data: {
@@ -24,7 +24,7 @@ export class MvChart extends LitElement {
         type: String,
         attribute: true,
       },
-    }
+    };
   }
 
   static get styles() {
@@ -251,8 +251,6 @@ export class MvChart extends LitElement {
         top: 25px;
       }
 
-      .inner .title {
-      }
 
       .inner img {
         width: 100px;
@@ -361,13 +359,13 @@ export class MvChart extends LitElement {
         width: 540px !important;
         top: 18px;
       }
-    `
+    `;
   }
 
   constructor() {
-    super()
-    this.theme = 'light'
-    this.chart = null
+    super();
+    this.theme = 'light';
+    this.chart = null;
   }
 
   render() {
@@ -394,106 +392,91 @@ export class MvChart extends LitElement {
           <div id="bubbles">     ${this.displayDonutBubbles()}</div>
         </div>
       </div>
-    `
+    `;
   }
 
   updated() {
-    this.displayDonutBubbles()
+    this.displayDonutBubbles();
 
-    this.displayChart()
+    this.displayChart();
   }
 
   displayChart() {
-
-
     if (this.chart) {
-      this.chart.destroy()
+      this.chart.destroy();
     }
 
-    const plugins = this.plugins || []
-    plugins.push(ChartDataLabels)
+    const plugins = this.plugins || [];
+    plugins.push(ChartDataLabels);
     const canvas = this.shadowRoot
       .querySelector('.mv-chart-canvas')
-      .getContext('2d')
+      .getContext('2d');
 
-    this.chart = new Chart(canvas, this.data)
+    this.chart = new Chart(canvas, this.data);
   }
 
   convertToChrtJsFormat(input) {
-    let backgroundColors = []
-    let linksIn = []
-    let names = []
-    let datas = []
+    const backgroundColors = [];
+    const linksIn = [];
+    const names = [];
+    const datas = [];
 
-    var obj = input
+    const obj = input;
 
-    let i = 0
+    obj.forEach((value) => {
+      names.push(`${value.name}`);
+      datas.push(`${value.data}`);
+      backgroundColors.push(`"${value.backgroundColor}"`);
+      linksIn.push(`"${value.link}"`);
+    });
 
-    for (var key in obj) {
-      if (i < 200) {
-        var value = obj[key]
+    this.data = {};
 
-        names.push(value.name)
-        datas.push('"' + value.data + '"')
-
-        backgroundColors.push('"' + value.backgroundColor + '"')
-        linksIn.push('"' + value.link + '"')
-        i++
-      }
-    }
-
-    this.data = {}
-
-    this.data.type = 'doughnut'
-    this.data.label = 'Profil'
-    this.data.data = {}
-    this.data.data.label = 'donut'
-    this.data.data.names = names
+    this.data.type = 'doughnut';
+    this.data.label = 'Profil';
+    this.data.data = {};
+    this.data.data.label = 'donut';
+    this.data.data.names = names;
     this.data.data.datasets = [
       JSON.parse(
-        '{ "label" : "donut" , "data" : [' +
-          datas +
-          '],"links" : [' +
-          linksIn +
-          '], "backgroundColor" : [' +
-          backgroundColors +
-          ']}',
+        `{ "label" : "donut" , "data" : [${
+          datas
+        }],"links" : [${
+          linksIn
+        }], "backgroundColor" : [${
+          backgroundColors
+        }]}`,
       ),
-    ]
+    ];
 
-    this.data.data.hoverOffset = 4
-    this.data.data.doughnut = {}
-    this.data.data.doughnut.borderWidth = 100
+    this.data.data.hoverOffset = 4;
+    this.data.data.doughnut = {};
+    this.data.data.doughnut.borderWidth = 100;
   }
 
   displayDonutBubbles() {
+    const loop = [];
 
-    console.log (this.data)
-    let loop = new Array()
+    const max = this.data.data.datasets[0].data.length;
 
-    let max = this.data.data.datasets[0].data.length
+    const positionDeg = [];
+    const ratio = 360 / max;
+    const pos = [];
 
-    let positionDeg = new Array()
-    let ratio = 360 / max
-    let pos = new Array()
-
-
-    for (let i = 0; i < max; i++) {
+    for (let i = 0; i < max; i += 1) {
       if (this.data.data.datasets[0].data[i]) {
-        const valeur = this.data.data.datasets[0].data[i]
-        const label = this.data.data.names[i]
+        const valeur = this.data.data.datasets[0].data[i];
+        const label = this.data.data.names[i];
 
-        positionDeg[i] = ratio * i
+        positionDeg[i] = ratio * i;
 
-        pos[i] = -90 * (i + 1) - positionDeg[i] - 90 * (i + 1) - 90
+        pos[i] = -90 * (i + 1) - positionDeg[i] - 90 * (i + 1) - 90;
 
-        if (i % 2 == 0) {
-          pos[i] = pos[i] + 180
-        } else {
-          null
+        if (i % 2 === 0) {
+          pos[i] += pos[i] + 180;
         }
 
-        if (this.data.data.datasets[0].links[i] != '') {
+        if (this.data.data.datasets[0].links[i] !== '') {
           loop[i] = html`
             <div
               class="label${i + 1} labelindic pos-${i + 1}-${max}"
@@ -513,7 +496,7 @@ export class MvChart extends LitElement {
                 </span>
               </a>
             </div>
-          `
+          `;
         } else {
           loop[i] = html`
             <div
@@ -530,13 +513,13 @@ export class MvChart extends LitElement {
                 </span>
               </a>
             </div>
-          `
+          `;
         }
       }
     }
 
-    return loop
+    return loop;
   }
 }
 
-customElements.define('mv-chart-donut', MvChart)
+customElements.define('mv-chart-donut', MvChart);
