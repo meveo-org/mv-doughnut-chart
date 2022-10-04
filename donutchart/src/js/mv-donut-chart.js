@@ -4,6 +4,26 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 Chart.register(DoughnutController, ArcElement);
 
+function convertToChrtJsFormat(input) {
+  return {
+    type: 'doughnut',
+    data: {
+      hoverOffset: 4,
+      doughnut: {
+        borderWidth: 100,
+      },
+      names: input.map((item) => item.name),
+      datasets: [
+        {
+          data: input.map((item) => item.data),
+          links: input.map((item) => item.link),
+          backgroundColor: input.map((item) => item.backgroundColor),
+        },
+      ],
+    },
+  };
+}
+
 export default class MvChart extends LitElement {
   static get properties() {
     return {
@@ -369,10 +389,8 @@ export default class MvChart extends LitElement {
   }
 
   render() {
+    this.data = convertToChrtJsFormat(this.data);
     return html`
-      ${this.convertToChrtJsFormat(this.data)}
- 
-
       <div style="transform: scale(0.5);margin-top:  100px;">
         <div class="big-circle">
           <div class="back-stroke">
@@ -415,45 +433,6 @@ export default class MvChart extends LitElement {
     this.chart = new Chart(canvas, this.data);
   }
 
-  convertToChrtJsFormat(input) {
-    const backgroundColors = [];
-    const linksIn = [];
-    const names = [];
-    const datas = [];
-
-    const obj = input;
-
-    obj.forEach((value) => {
-      names.push(`${value.name}`);
-      datas.push(`${value.data}`);
-      backgroundColors.push(`"${value.backgroundColor}"`);
-      linksIn.push(`"${value.link}"`);
-    });
-
-    this.data = {};
-
-    this.data.type = 'doughnut';
-    this.data.label = 'Profil';
-    this.data.data = {};
-    this.data.data.label = 'donut';
-    this.data.data.names = names;
-    this.data.data.datasets = [
-      JSON.parse(
-        `{ "label" : "donut" , "data" : [${
-          datas
-        }],"links" : [${
-          linksIn
-        }], "backgroundColor" : [${
-          backgroundColors
-        }]}`,
-      ),
-    ];
-
-    this.data.data.hoverOffset = 4;
-    this.data.data.doughnut = {};
-    this.data.data.doughnut.borderWidth = 100;
-  }
-
   displayDonutBubbles() {
     const loop = [];
 
@@ -473,7 +452,7 @@ export default class MvChart extends LitElement {
         pos[i] = -90 * (i + 1) - positionDeg[i] - 90 * (i + 1) - 90;
 
         if (i % 2 === 0) {
-          pos[i] = pos[i] + 180;
+          pos[i] += 180;
         }
 
         if (this.data.data.datasets[0].links[i] !== '') {
