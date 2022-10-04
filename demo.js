@@ -2,9 +2,9 @@ import { LitElement, html, css } from 'lit'
 //import "mv-container";
 import './donutchart/src/js/mv-donut-chart.js'
 
-import { DATA } from "./donutchart/src/js/data.js";
+import { DATA } from './donutchart/src/js/data.js';
 
-export class MvChartBubbleDemo extends LitElement {
+export default class MvChartBubbleDemo extends LitElement {
   static get properties() {
     return {
       theme: { type: String, attribute: true },
@@ -104,17 +104,7 @@ export class MvChartBubbleDemo extends LitElement {
     this._data = DATA;
   }
 
-  firstUpdated() {
-
-  }
-
-  updated() {
-    console.log("Updated");
-  }
-
   render() {
-    console.log("Rendering !");
-
     return html`
       <fieldset>
         <legend>Theme</legend>
@@ -152,18 +142,14 @@ export class MvChartBubbleDemo extends LitElement {
   changeTheme = (originalEvent) => {
     const {
       target: { value },
-    } = originalEvent
-    this.theme = value
+    } = originalEvent;
+    this.theme = value;
   }
 
   getNewVal() {
-
-
-    let newVal = this.shadowRoot.querySelector('textarea').value
+    const newVal = this.shadowRoot.querySelector('textarea').value
 
     this._data = JSON.parse(newVal);
-    
-
   }
 }
 

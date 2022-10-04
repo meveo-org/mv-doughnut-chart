@@ -473,7 +473,7 @@ export default class MvChart extends LitElement {
         pos[i] = -90 * (i + 1) - positionDeg[i] - 90 * (i + 1) - 90;
 
         if (i % 2 === 0) {
-          pos[i] += pos[i] + 180;
+          pos[i] = pos[i] + 180;
         }
 
         if (this.data.data.datasets[0].links[i] !== '') {
